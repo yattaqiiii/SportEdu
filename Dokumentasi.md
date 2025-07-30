@@ -117,9 +117,10 @@ mvn jpackage:jpackage
 #### 3. Modul Quiz
 - **Mulai**: Memulai quiz interaktif
 - **Petunjuk**: Panduan cara bermain quiz
-- **Mode Quiz**:
+- **Mode Quiz**: (menggunakan gambar png)
     - **Tebak Gambar**: Identifikasi gerakan dari gambar
     - **Cocokkan Gambar**: Mencocokkan gambar dengan deskripsi
+- **Hasil**: Menampilkan skor dan evaluasi 
 
 #### 4. Navigasi
 - **Tombol Kembali**: Kembali ke halaman sebelumnya
