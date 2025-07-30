@@ -63,6 +63,9 @@ Aplikasi menggunakan skema warna yang konsisten:
 - **Lemon Tart**: `#FFDE63` 
 - **mustard**: `#FFBC4C` 
 - **Black russian**: `#1A1E2C` 
+- **merah**: `#FF5B4C` 
+
+dan font Poppins untuk teks.
 
 ### 🚀 Cara Menjalankan Aplikasi
 
