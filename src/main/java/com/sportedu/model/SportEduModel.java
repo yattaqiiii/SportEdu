@@ -1,115 +1,76 @@
-// SportEduModel.java
 package com.sportedu.model;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SportEduModel {
 
-    // Data struktur untuk menyimpan informasi olahraga dan teknik
-    private Map<String, List<String>> sportTechniques;
-    private Map<String, TeknikInfo> teknikDetails;
+    private final List<Soal> soalList;
+    private final Map<String, List<Teknik>> dataMateri;
+    private final List<SoalMencocokkan> soalMencocokkanList;
 
     public SportEduModel() {
-        initializeData();
+        soalList = new ArrayList<>();
+        dataMateri = new HashMap<>();
+        soalMencocokkanList = new ArrayList<>();
+        loadSoalData();
+        loadMateriData();
+        loadSoalMencocokkanData();
     }
 
-    private void initializeData() {
-        // Inisialisasi data olahraga dan teknik-tekniknya
-        sportTechniques = new HashMap<>();
-        sportTechniques.put("SepakBola", Arrays.asList("Passing", "Dribbling", "Shooting", "Heading"));
-        sportTechniques.put("Badminton", Arrays.asList("Servis", "Smash", "Dropshot", "Clear"));
+    private void loadMateriData() {
+        List<Teknik> sepakBolaTeknik = new ArrayList<>();
+        sepakBolaTeknik.add(new Teknik("Passing", "Passing adalah teknik mengoper bola ke rekan satu tim.", "/assets/gif1.webp"));
+        sepakBolaTeknik.add(new Teknik("Dribbling", "Dribbling adalah teknik menggiring bola melewati lawan.", "/assets/gif2.webp"));
+        sepakBolaTeknik.add(new Teknik("Shooting", "Shooting adalah teknik menendang bola ke arah gawang.", "/assets/gif3.webp"));
+        sepakBolaTeknik.add(new Teknik("Heading", "Heading adalah teknik menyundul bola menggunakan kepala.", "/assets/gif4.webp"));
+        dataMateri.put("Sepak Bola", sepakBolaTeknik);
 
-        // Inisialisasi detail teknik
-        teknikDetails = new HashMap<>();
-
-        // Detail untuk teknik Passing
-        teknikDetails.put("Passing", new TeknikInfo(
-                "Passing",
-                "Passing adalah keterampilan memindahkan bola dari satu pemain ke pemain lain, yang dapat dilakukan menggunakan kaki atau bagian tubuh lain kecuali tangan.",
-                Arrays.asList("Bola", "Lapangan", "Sepatu bola"),
-                Arrays.asList("Peralatan", "Animasi Passing", "Pengertian Passing")
-        ));
-
-        // Detail untuk teknik lainnya (bisa dikembangkan)
-        teknikDetails.put("Dribbling", new TeknikInfo(
-                "Dribbling",
-                "Dribbling adalah teknik menggiring bola menggunakan kaki sambil berlari atau berjalan.",
-                Arrays.asList("Bola", "Sepatu bola", "Cone/marker"),
-                Arrays.asList("Teknik Dasar", "Variasi Dribbling", "Latihan")
-        ));
-
-        teknikDetails.put("Shooting", new TeknikInfo(
-                "Shooting",
-                "Shooting adalah teknik menendang bola ke arah gawang untuk mencetak gol.",
-                Arrays.asList("Bola", "Gawang", "Sepatu bola"),
-                Arrays.asList("Posisi Tubuh", "Teknik Tendangan", "Akurasi")
-        ));
-
-        teknikDetails.put("Heading", new TeknikInfo(
-                "Heading",
-                "Heading adalah teknik menyundul bola menggunakan kepala untuk mengoper atau mencetak gol.",
-                Arrays.asList("Bola", "Sepatu bola"),
-                Arrays.asList("Posisi Kepala", "Timing", "Arah Bola")
-        ));
+        List<Teknik> badmintonTeknik = new ArrayList<>();
+        badmintonTeknik.add(new Teknik("Servis", "Servis adalah pukulan awal untuk memulai permainan.", "/assets/gif5.webp"));
+        badmintonTeknik.add(new Teknik("Smash", "Smash adalah pukulan keras dan menukik tajam.", "/assets/gif6.webp"));
+        badmintonTeknik.add(new Teknik("Footwork", "Footwork adalah pergerakan kaki yang efisien.", "/assets/gif7.webp"));
+        badmintonTeknik.add(new Teknik("Netting", "Netting adalah pukulan pelan di dekat net.", "/assets/gif18.webp"));
+        dataMateri.put("Badminton", badmintonTeknik);
     }
 
-    // Getter methods
-    public List<String> getTechniquesBySport(String sport) {
-        return sportTechniques.get(sport);
+    private void loadSoalData() {
+        soalList.add(new Soal("/assets/soccer_dribble.jpg", new String[]{"Dribbling", "Passing", "Heading", "Shooting"}, "Dribbling"));
+        soalList.add(new Soal("/assets/badminton_smash.jpg", new String[]{"Servis", "Smash", "Netting", "Footwork"}, "Smash"));
+        soalList.add(new Soal("/assets/soccer_shoot.jpg", new String[]{"Tackle", "Goal", "Shooting", "Goalkeeper"}, "Shooting"));
+        soalList.add(new Soal("/assets/badminton_service.jpg", new String[]{"Servis", "Netting", "Smash", "Drop shot"}, "Servis"));
+        soalList.add(new Soal("/assets/soccer_heading.jpg", new String[]{"Passing", "Dribbling", "Heading", "Tackle"}, "Heading"));
+        soalList.add(new Soal("/assets/badminton_netting.jpg", new String[]{"Lob", "Smash", "Netting", "Servis"}, "Netting"));
     }
 
-    public TeknikInfo getTeknikInfo(String teknikName) {
-        return teknikDetails.get(teknikName);
+    private void loadSoalMencocokkanData() {
+        // Set 1
+        Map<String, String> set1 = new HashMap<>();
+        set1.put("/assets/soccer_dribble.jpg", "Dribbling");
+        set1.put("/assets/badminton_smash.jpg", "Smash");
+        set1.put("/assets/soccer_heading.jpg", "Heading");
+        set1.put("/assets/badminton_service.jpg", "Servis");
+        soalMencocokkanList.add(new SoalMencocokkan(set1));
+
+        // Set 2
+        Map<String, String> set2 = new HashMap<>();
+        set2.put("/assets/soccer_shoot.jpg", "Shooting");
+        set2.put("/assets/badminton_netting.jpg", "Netting");
+        set2.put("/assets/soccer_tackle.jpg", "Tackle");
+        set2.put("/assets/soccer_goalkeeper.jpg", "Goalkeeper");
+        soalMencocokkanList.add(new SoalMencocokkan(set2));
     }
 
-    public List<String> getAllSports() {
-        return Arrays.asList("SepakBola", "Badminton");
+    public List<Soal> getShuffledSoalList() {
+        List<Soal> shuffledList = new ArrayList<>(soalList);
+        Collections.shuffle(shuffledList);
+        return shuffledList;
     }
 
-    // Inner class untuk menyimpan informasi detail teknik
-    public static class TeknikInfo {
-        private String name;
-        private String description;
-        private List<String> equipment;
-        private List<String> subPages;
-
-        public TeknikInfo(String name, String description, List<String> equipment, List<String> subPages) {
-            this.name = name;
-            this.description = description;
-            this.equipment = equipment;
-            this.subPages = subPages;
-        }
-
-        // Getters
-        public String getName() { return name; }
-        public String getDescription() { return description; }
-        public List<String> getEquipment() { return equipment; }
-        public List<String> getSubPages() { return subPages; }
-
-        // Setters
-        public void setName(String name) { this.name = name; }
-        public void setDescription(String description) { this.description = description; }
-        public void setEquipment(List<String> equipment) { this.equipment = equipment; }
-        public void setSubPages(List<String> subPages) { this.subPages = subPages; }
+    public List<SoalMencocokkan> getSoalMencocokkanList() {
+        return soalMencocokkanList;
     }
 
-    // Method untuk mendapatkan data quiz (akan dikembangkan nanti)
-    public Map<String, Object> getQuizData() {
-        Map<String, Object> quizData = new HashMap<>();
-        // Implementasi data quiz akan ditambahkan nanti
-        return quizData;
-    }
-
-    // Method untuk validasi data
-    public boolean isValidSport(String sport) {
-        return sportTechniques.containsKey(sport);
-    }
-
-    public boolean isValidTechnique(String sport, String technique) {
-        List<String> techniques = sportTechniques.get(sport);
-        return techniques != null && techniques.contains(technique);
+    public List<Teknik> getTeknikList(String olahraga) {
+        return dataMateri.getOrDefault(olahraga, new ArrayList<>());
     }
 }

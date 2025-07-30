@@ -1,151 +1,173 @@
-// MainPresenter.java
 package com.sportedu.presenter;
 
+import com.sportedu.model.Soal;
+import com.sportedu.model.SoalMencocokkan;
 import com.sportedu.model.SportEduModel;
-import com.sportedu.view.MainView;
+import com.sportedu.view.MainView; // Cukup import MainView
 
-public class MainPresenter implements MainView.MainViewListener {
-    private MainView view;
-    private SportEduModel model;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
-    // State management untuk navigasi
-    private String currentSport = "";
-    private String currentTeknik = "";
-    private int currentPageIndex = 0;
+/**
+ * Versi Presenter yang sudah diperbaiki untuk mengatasi error kompilasi.
+ * Menggunakan nama method dan variabel yang benar dari MainView.
+ */
+public class MainPresenter {
+    private final MainView mainView;
+    private final SportEduModel model;
 
-    public MainPresenter(MainView view) {
-        this.view = view;
-        this.model = new SportEduModel();
-        this.view.setListener(this);
+    // State untuk Kuis Tebak Gambar
+    private List<Soal> tebakGambarSoal;
+    private int tebakGambarIndex;
+    private int tebakGambarScore;
+
+    // State untuk Kuis Mencocokkan Gambar
+    private List<SoalMencocokkan> matchingQuizSoal;
+    private int matchingQuizRound;
+    private int matchingQuizScore;
+    private int correctMatchesInRound;
+    private JButton selectedImageButton;
+    private JButton selectedNameButton;
+
+    public MainPresenter(MainView mainView, SportEduModel model) {
+        this.mainView = mainView;
+        this.model = model;
+        initListeners();
     }
 
-    public void showWelcomePage() {
-        view.showWelcomePage();
+    private void initListeners() {
+        // Navigasi Utama
+        mainView.getLandingView().addMateriButtonListener(e -> showMateriView());
+        mainView.getLandingView().addQuizButtonListener(e -> showQuizModeView());
+
+        // Navigasi Kembali
+        mainView.getMateriView().addBackListener(e -> showLandingView());
+        mainView.getTeknikView().addBackListener(e -> showMateriView());
+        mainView.getPenjelasanView().addBackListener(e -> mainView.showTeknikView(mainView.getPenjelasanView().getCurrentSport()));
+        mainView.getQuizModeView().addBackListener(e -> showLandingView());
+        mainView.getTebakGambarView().addBackListener(e -> showQuizModeView()); // Perbaikan: getTebakGambarView
+        mainView.getMatchingQuizView().addBackListener(e -> showQuizModeView());
+
+        // Alur Materi
+        mainView.getMateriView().addSportButtonListener("Sepak Bola", e -> mainView.showTeknikView("Sepak Bola"));
+        mainView.getMateriView().addSportButtonListener("Badminton", e -> mainView.showTeknikView("Badminton"));
+        model.getTeknikList("Sepak Bola").forEach(teknik ->
+                mainView.getTeknikView().addTeknikButtonListener("Sepak Bola", teknik.getNama(), e -> mainView.showPenjelasanView("Sepak Bola", teknik))
+        );
+        model.getTeknikList("Badminton").forEach(teknik ->
+                mainView.getTeknikView().addTeknikButtonListener("Badminton", teknik.getNama(), e -> mainView.showPenjelasanView("Badminton", teknik))
+        );
+
+        // Alur Kuis
+        mainView.getQuizModeView().addTebakGambarListener(e -> startTebakGambarQuiz());
+        mainView.getQuizModeView().addMencocokkanGambarListener(e -> startMatchingQuiz());
+        mainView.getMatchingQuizView().addImageButtonListener(this::handleMatchingImageClick);
+        mainView.getMatchingQuizView().addNameButtonListener(this::handleMatchingNameClick);
     }
 
-    @Override
-    public void onMateriClicked() {
-        view.showMateriPage();
+    // --- Logika Navigasi ---
+    private void showLandingView() { mainView.showPanel(MainView.LANDING_PANEL); }
+    private void showMateriView() { mainView.showPanel(MainView.MATERI_PANEL); }
+    private void showQuizModeView() { mainView.showPanel(MainView.QUIZ_MODE_PANEL); }
+
+    // --- Logika Kuis: Tebak Gambar ---
+    private void startTebakGambarQuiz() {
+        tebakGambarSoal = model.getShuffledSoalList();
+        tebakGambarIndex = 0;
+        tebakGambarScore = 0;
+        mainView.showPanel(MainView.TEBAK_GAMBAR_PANEL); // Perbaikan: TEBAK_GAMBAR_PANEL
+        displayNextTebakGambarQuestion();
     }
 
-    @Override
-    public void onQuizClicked() {
-        view.showQuizPage();
-    }
-
-    @Override
-    public void onSepakBolaClicked() {
-        currentSport = "SepakBola";
-        view.showSepakBolaPage();
-    }
-
-    @Override
-    public void onBadmintonClicked() {
-        currentSport = "Badminton";
-        // Untuk saat ini, kita hanya fokus pada sepak bola
-        // Nanti bisa dikembangkan untuk badminton
-        view.showSepakBolaPage(); // Sementara menggunakan layout yang sama
-    }
-
-    @Override
-    public void onTeknikClicked(String teknik) {
-        currentTeknik = teknik;
-        currentPageIndex = 0; // Reset ke halaman pertama
-
-        if (teknik.equals("Passing")) {
-            // Untuk passing, kita mulai dari halaman "Peralatan"
-            view.showTeknikDetailPage("Passing");
-        } else {
-            view.showTeknikDetailPage(teknik);
-        }
-    }
-
-    @Override
-    public void onKembaliClicked() {
-        // Navigasi kembali berdasarkan state saat ini
-        if (!currentTeknik.isEmpty()) {
-            // Jika sedang di detail teknik, kembali ke halaman olahraga
-            currentTeknik = "";
-            if (currentSport.equals("SepakBola")) {
-                view.showSepakBolaPage();
-            } else if (currentSport.equals("Badminton")) {
-                view.showSepakBolaPage(); // Sementara
+    private void displayNextTebakGambarQuestion() {
+        if (tebakGambarIndex < tebakGambarSoal.size()) {
+            Soal soal = tebakGambarSoal.get(tebakGambarIndex);
+            mainView.getTebakGambarView().setQuestion(tebakGambarIndex + 1, tebakGambarSoal.size(), soal.getImagePath(), soal.getOptions());
+            for (int i = 0; i < soal.getOptions().length; i++) {
+                final int optionIndex = i;
+                mainView.getTebakGambarView().addOptionButtonListener(i, e -> checkTebakGambarAnswer(soal.getOptions()[optionIndex]));
             }
-        } else if (!currentSport.isEmpty()) {
-            // Jika sedang di halaman olahraga, kembali ke halaman materi
-            currentSport = "";
-            view.showMateriPage();
         } else {
-            // Kembali ke halaman utama
-            view.showWelcomePage();
+            mainView.getTebakGambarView().showResult(tebakGambarScore, tebakGambarSoal.size());
+            showQuizModeView();
         }
     }
 
-    @Override
-    public void onMulaiQuizClicked() {
-        // Implementasi untuk memulai quiz akan ditambahkan nanti
-        System.out.println("Quiz dimulai!");
-        // Sementara kembali ke halaman quiz
-        view.showQuizPage();
+    private void checkTebakGambarAnswer(String selectedAnswer) {
+        if (selectedAnswer.equals(tebakGambarSoal.get(tebakGambarIndex).getCorrectAnswer())) {
+            tebakGambarScore++;
+        }
+        tebakGambarIndex++;
+        displayNextTebakGambarQuestion();
     }
 
-    @Override
-    public void onPetunjukClicked() {
-        view.showPetunjukPage();
+    // --- Logika Kuis: Mencocokkan Gambar ---
+    private void startMatchingQuiz() {
+        matchingQuizSoal = model.getSoalMencocokkanList();
+        matchingQuizRound = 0;
+        matchingQuizScore = 0;
+        mainView.showPanel(MainView.MATCHING_QUIZ_PANEL);
+        displayNextMatchingRound();
     }
 
-    @Override
-    public void onTebakGambarClicked() {
-        // Implementasi untuk tebak gambar
-        System.out.println("Tebak Gambar dipilih!");
+    private void displayNextMatchingRound() {
+        if (matchingQuizRound < matchingQuizSoal.size()) {
+            correctMatchesInRound = 0;
+            SoalMencocokkan soalSet = matchingQuizSoal.get(matchingQuizRound);
+            Map<String, String> pasangan = soalSet.getPasanganJawaban();
+            List<String> imagePaths = new ArrayList<>(pasangan.keySet());
+            List<String> names = new ArrayList<>(pasangan.values());
+            Collections.shuffle(imagePaths);
+            Collections.shuffle(names);
+            mainView.getMatchingQuizView().setRound(matchingQuizRound + 1, matchingQuizSoal.size(), imagePaths, names);
+        } else {
+            mainView.getMatchingQuizView().showResult(matchingQuizScore, matchingQuizSoal.size() * 4);
+            showQuizModeView();
+        }
     }
 
-    @Override
-    public void onCocokkanGambarClicked() {
-        // Implementasi untuk cocokkan gambar
-        System.out.println("Cocokkan Gambar dipilih!");
+    private void handleMatchingImageClick(java.awt.event.ActionEvent e) {
+        selectedImageButton = (JButton) e.getSource();
+        mainView.getMatchingQuizView().highlightButton(selectedImageButton, true);
+        checkMatch();
     }
 
-    // Method untuk navigasi dengan arrow (next/previous)
-    public void navigateNext() {
-        if (currentTeknik.equals("Passing")) {
-            currentPageIndex++;
-            if (currentPageIndex == 1) {
-                view.showTeknikDetailPage("Animasi Passing");
-            } else if (currentPageIndex == 2) {
-                view.showTeknikDetailPage("Pengertian Passing");
+    private void handleMatchingNameClick(java.awt.event.ActionEvent e) {
+        selectedNameButton = (JButton) e.getSource();
+        mainView.getMatchingQuizView().highlightButton(selectedNameButton, true);
+        checkMatch();
+    }
+
+    private void checkMatch() {
+        if (selectedImageButton != null && selectedNameButton != null) {
+            String imagePath = selectedImageButton.getActionCommand();
+            String name = selectedNameButton.getActionCommand();
+
+            Map<String, String> correctPairs = matchingQuizSoal.get(matchingQuizRound).getPasanganJawaban();
+
+            if (name.equals(correctPairs.get(imagePath))) {
+                // Jawaban benar
+                matchingQuizScore++;
+                correctMatchesInRound++;
+                mainView.getMatchingQuizView().markCorrect(selectedImageButton, selectedNameButton);
+                if (correctMatchesInRound == 4) {
+                    matchingQuizRound++;
+                    // Jeda sejenak sebelum ronde berikutnya
+                    Timer timer = new Timer(1000, ev -> displayNextMatchingRound());
+                    timer.setRepeats(false);
+                    timer.start();
+                }
             } else {
-                // Loop kembali ke awal atau batasi navigasi
-                currentPageIndex = 0;
-                view.showTeknikDetailPage("Passing");
+                // Jawaban salah, reset highlight
+                mainView.getMatchingQuizView().highlightButton(selectedImageButton, false);
+                mainView.getMatchingQuizView().highlightButton(selectedNameButton, false);
             }
+            // Reset pilihan
+            selectedImageButton = null;
+            selectedNameButton = null;
         }
-    }
-
-    public void navigatePrevious() {
-        if (currentTeknik.equals("Passing")) {
-            currentPageIndex--;
-            if (currentPageIndex < 0) {
-                currentPageIndex = 2; // Loop ke halaman terakhir
-                view.showTeknikDetailPage("Pengertian Passing");
-            } else if (currentPageIndex == 0) {
-                view.showTeknikDetailPage("Passing");
-            } else if (currentPageIndex == 1) {
-                view.showTeknikDetailPage("Animasi Passing");
-            }
-        }
-    }
-
-    // Getter methods untuk state management
-    public String getCurrentSport() {
-        return currentSport;
-    }
-
-    public String getCurrentTeknik() {
-        return currentTeknik;
-    }
-
-    public int getCurrentPageIndex() {
-        return currentPageIndex;
     }
 }

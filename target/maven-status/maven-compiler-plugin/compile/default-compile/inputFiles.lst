@@ -1,4 +1,15 @@
 C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\Main.java
-C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\MainView.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\model\Soal.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\model\SoalMencocokkan.java
 C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\model\SportEduModel.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\model\Teknik.java
 C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\presenter\MainPresenter.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\LandingView.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\MainView.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\MatchingQuizView.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\MateriView.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\PenjelasanView.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\QuizModeView.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\QuizView.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\TeknikView.java
+C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\java\com\sportedu\view\UIFactory.java
