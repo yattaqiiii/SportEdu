@@ -1,0 +1,6 @@
+com\sportedu\model\SportEduModel$TeknikInfo.class
+com\sportedu\presenter\MainPresenter.class
+com\sportedu\model\SportEduModel.class
+com\sportedu\view\MainView.class
+com\sportedu\Main.class
+com\sportedu\view\MainView$MainViewListener.class

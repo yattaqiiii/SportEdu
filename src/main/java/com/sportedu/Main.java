@@ -15,6 +15,8 @@ public class Main extends Application {
 
         primaryStage.setTitle("SportEdu - Aplikasi Pembelajaran Olahraga Interaktif");
         primaryStage.setScene(mainView.getScene());
+        primaryStage.setWidth(1280);
+        primaryStage.setHeight(832);
         primaryStage.setResizable(false);
         primaryStage.show();
 

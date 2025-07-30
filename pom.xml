@@ -96,6 +96,7 @@
                             <mainClass>com.sportedu.Main</mainClass>
                         </manifest>
                     </archive>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
             </plugin>
         </plugins>

@@ -48,8 +48,8 @@ sportedu-desktop/
 │   │   └── resources/
 │   │       ├── styles.css
 │   │       ├── images/
-│   │       ├── audio/
-│   │       └── models3d/
+│   │       ├── Poppins/
+│   │       └── audio/
 │   └── test/
 ├── target/
 ├── pom.xml
@@ -58,11 +58,11 @@ sportedu-desktop/
 
 ### 🎨 Desain UI
 Aplikasi menggunakan skema warna yang konsisten:
-- **Primary Blue**: `#6B73C1` (Header)
-- **Secondary Blue**: `#2E86AB` (Titles)
-- **Orange**: `#F4A261` (Primary buttons)
-- **Red**: `#E63946` (Secondary buttons)
-- **Background**: `#F5E6A3` (Yellow pattern background)
+- **Blue Yonder**: `#516BB0`
+- **Pale yellow**: `#FEFFC4` 
+- **Lemon Tart**: `#FFDE63` 
+- **mustard**: `#FFBC4C` 
+- **Black russian**: `#1A1E2C` 
 
 ### 🚀 Cara Menjalankan Aplikasi
 
@@ -111,8 +111,8 @@ mvn jpackage:jpackage
 - **Pilih Olahraga**: Sepak Bola atau Badminton
 - **Pilih Teknik**: 4 teknik dasar per olahraga
     - Sepak Bola: Passing, Dribbling, Shooting, Heading
-    - Badminton: Servis, Smash, Dropshot, Clear
-- **Detail Teknik**: Informasi lengkap dengan teks, gambar, dan audio
+    - Badminton: Servis, Smash, Footwork, Netting
+- **Detail Teknik**: Informasi lengkap dengan teks, gambar animasi singkat (gif), dan audio.
 
 #### 3. Modul Quiz
 - **Mulai**: Memulai quiz interaktif

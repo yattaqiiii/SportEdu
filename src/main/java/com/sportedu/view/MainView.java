@@ -6,6 +6,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -39,24 +42,30 @@ public class MainView {
 
     private void initializeView() {
         root = new StackPane();
-        root.setPrefSize(1280, 800);
+        root.setPrefSize(1280, 832);
 
         // Background dengan pattern dots
         createBackground();
 
-        scene = new Scene(root, 1280, 800);
+        scene = new Scene(root, 1280, 832);
 
         // Load CSS
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        try {
+            scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+        } catch (NullPointerException e) {
+            System.err.println("Tidak dapat menemukan styles.css. Pastikan file tersebut ada di folder resources.");
+        }
     }
 
     private void createBackground() {
-        // Background kuning dengan pattern dots
+        // Background krem dengan pattern dots
         Region background = new Region();
-        background.setStyle("-fx-background-color: #F5E6A3; " +
-                "-fx-background-image: radial-gradient(circle at 20px 20px, #F4A261 2px, transparent 2px); " +
-                "-fx-background-size: 40px 40px;");
-        background.setPrefSize(1280, 800);
+        background.setStyle(
+                "-fx-background-color: #FFF5E1; " +
+                "-fx-background-image: radial-gradient(circle at 15px 15px, #E0D8C4 1px, transparent 0); " +
+                "-fx-background-size: 30px 30px;"
+        );
+        background.setPrefSize(1280, 832);
         root.getChildren().add(background);
     }
 
@@ -68,33 +77,38 @@ public class MainView {
     public void showWelcomePage() {
         clearPage();
 
-        VBox welcomePage = new VBox(30);
-        welcomePage.setAlignment(Pos.CENTER);
+        VBox welcomePage = new VBox(20); // Mengurangi spasi
+        welcomePage.setAlignment(Pos.TOP_CENTER); // Mulai dari atas
 
-        // Header dengan logo Politeknik Aceh
+        // Header dengan logo
         HBox header = createHeader();
 
+        // Spacer untuk mendorong konten ke tengah secara vertikal
+        Region topSpacer = new Region();
+        VBox.setVgrow(topSpacer, Priority.SOMETIMES);
+
         // Content area
-        VBox contentArea = new VBox(40);
+        VBox contentArea = new VBox(25); // Mengurangi spasi
         contentArea.setAlignment(Pos.CENTER);
         contentArea.setStyle("-fx-background-color: white; -fx-background-radius: 20; " +
-                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
-        contentArea.setPadding(new Insets(60, 100, 60, 100));
-        contentArea.setMaxWidth(600);
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15, 0, 0, 5);");
+        contentArea.setPadding(new Insets(50, 80, 50, 80)); // Menyesuaikan padding
+        contentArea.setMaxWidth(700); // Sedikit lebih lebar
 
-        Label titleLabel = new Label("SportEdu");
-        titleLabel.setStyle("-fx-font-size: 48px; -fx-font-weight: bold; " +
-                "-fx-text-fill: #2E86AB; " +
-                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 2, 2);");
+        Label titleLabel = new Label("SPORTEDU");
+        titleLabel.setStyle("-fx-font-family: 'Arial Black'; -fx-font-size: 64px; -fx-font-weight: 900; " +
+                "-fx-text-fill: #2A3A75; " +
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 2, 2);");
 
-        Label subtitleLabel = new Label("Aplikasi Pembelajaran Olahraga Interaktif");
-        subtitleLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: #F4A261;");
+        Label subtitleLabel = new Label("Aplikasi Pembelajaran Olahraga Interaktif untuk Anak SD");
+        subtitleLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: #F4A261; -fx-font-weight: bold;");
 
-        HBox buttonContainer = new HBox(40);
+        HBox buttonContainer = new HBox(30); // Mengurangi spasi
         buttonContainer.setAlignment(Pos.CENTER);
 
-        Button materiButton = createPrimaryButton("Materi", "#F4A261");
-        Button quizButton = createPrimaryButton("Quiz", "#E63946");
+        // Warna tombol disesuaikan dengan desain
+        Button materiButton = createPrimaryButton("Materi", "#E74C3C");
+        Button quizButton = createPrimaryButton("Quiz", "#3498DB");
 
         materiButton.setOnAction(e -> {
             if (listener != null) listener.onMateriClicked();
@@ -105,9 +119,28 @@ public class MainView {
         });
 
         buttonContainer.getChildren().addAll(materiButton, quizButton);
-        contentArea.getChildren().addAll(titleLabel, subtitleLabel, buttonContainer);
+        contentArea.getChildren().addAll(titleLabel, subtitleLabel, new VBox(20), buttonContainer); // Menambah spasi kecil
 
-        welcomePage.getChildren().addAll(header, contentArea);
+        // Spacer untuk mendorong konten ke tengah
+        Region bottomSpacer = new Region();
+        VBox.setVgrow(bottomSpacer, Priority.SOMETIMES);
+
+        welcomePage.getChildren().addAll(header, topSpacer, contentArea, bottomSpacer);
+
+        // Menambahkan karakter di kanan bawah
+        try {
+            Image characterImage = new Image(getClass().getResourceAsStream("/tampilan/1. Landing Page.png"));
+            ImageView characterView = new ImageView(characterImage);
+            characterView.setFitWidth(300); // Sesuaikan ukuran
+            characterView.setPreserveRatio(true);
+
+            StackPane.setAlignment(characterView, Pos.BOTTOM_RIGHT);
+            StackPane.setMargin(characterView, new Insets(0, 50, 0, 0)); // Margin dari kanan bawah
+            root.getChildren().add(characterView);
+        } catch (Exception e) {
+            System.err.println("Gagal memuat gambar karakter: " + e.getMessage());
+        }
+
 
         root.getChildren().add(welcomePage);
         currentPage = welcomePage;
@@ -155,7 +188,14 @@ public class MainView {
         contentArea.getChildren().addAll(titleLabel, sportsContainer, kembaliButton);
         materiPage.getChildren().addAll(header, contentArea);
 
-        root.getChildren().add(materiPage);
+        ScrollPane scrollPane = new ScrollPane(materiPage);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        root.getChildren().add(scrollPane);
         currentPage = materiPage;
     }
 
@@ -245,7 +285,14 @@ public class MainView {
 
         sepakBolaPage.getChildren().addAll(header, mainContent, kembaliButton);
 
-        root.getChildren().add(sepakBolaPage);
+        ScrollPane scrollPane = new ScrollPane(sepakBolaPage);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        root.getChildren().add(scrollPane);
         currentPage = sepakBolaPage;
     }
 
@@ -301,7 +348,14 @@ public class MainView {
 
         detailPage.getChildren().addAll(header, mainContent, kembaliButton);
 
-        root.getChildren().add(detailPage);
+        ScrollPane scrollPane = new ScrollPane(detailPage);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        root.getChildren().add(scrollPane);
         currentPage = detailPage;
     }
 
@@ -407,7 +461,14 @@ public class MainView {
         contentArea.getChildren().addAll(titleLabel, instructionsBox);
         petunjukPage.getChildren().addAll(header, contentArea, kembaliButton);
 
-        root.getChildren().add(petunjukPage);
+        ScrollPane scrollPane = new ScrollPane(petunjukPage);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        root.getChildren().add(scrollPane);
         currentPage = petunjukPage;
     }
 
@@ -448,7 +509,14 @@ public class MainView {
         contentArea.getChildren().addAll(titleLabel, buttonContainer);
         quizPage.getChildren().addAll(header, contentArea);
 
-        root.getChildren().add(quizPage);
+        ScrollPane scrollPane = new ScrollPane(quizPage);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+
+        root.getChildren().add(scrollPane);
         currentPage = quizPage;
     }
 
@@ -456,43 +524,41 @@ public class MainView {
     private HBox createHeader() {
         HBox header = new HBox();
         header.setAlignment(Pos.CENTER_LEFT);
-        header.setPadding(new Insets(20, 40, 0, 40));
-        header.setStyle("-fx-background-color: #6B73C1;");
+        header.setPadding(new Insets(10, 50, 10, 50)); // Padding disesuaikan
+        header.setStyle("-fx-background-color: #2A3A75;"); // Warna biru tua dari desain
         header.setPrefWidth(1280);
-        header.setPrefHeight(80);
+        header.setPrefHeight(70); // Tinggi disesuaikan
 
-        // Logo circle
-        Circle logoCircle = new Circle(25);
-        logoCircle.setFill(Color.WHITE);
+        // Logo placeholder
+        Label logoText = new Label("SPORTEDU");
+        logoText.setStyle("-fx-font-family: 'Arial Black'; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label logoText = new Label("POLITEKNIK ACEH");
-        logoText.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: white;");
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Region spacer1 = new Region();
-        HBox.setHgrow(spacer1, Priority.ALWAYS);
+        Button halamanUtamaBtn = createNavButton("Halaman Utama");
+        Button materiBtn = createNavButton("Materi");
+        Button quizBtn = createNavButton("Quiz");
 
-        Button halamanUtamaBtn = new Button("Halaman Utama");
-        Button materiBtn = new Button("Materi");
-        Button quizBtn = new Button("Quiz");
-
-        halamanUtamaBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: white; " +
-                "-fx-font-size: 14px; -fx-border-color: transparent;");
-        materiBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: white; " +
-                "-fx-font-size: 14px; -fx-border-color: transparent;");
-        quizBtn.setStyle("-fx-background-color: transparent; -fx-text-fill: white; " +
-                "-fx-font-size: 14px; -fx-border-color: transparent;");
-
-        HBox logoContainer = new HBox(15);
-        logoContainer.setAlignment(Pos.CENTER_LEFT);
-        logoContainer.getChildren().addAll(logoCircle, logoText);
-
-        HBox menuContainer = new HBox(30);
+        HBox menuContainer = new HBox(20); // Spasi antar menu
         menuContainer.setAlignment(Pos.CENTER_RIGHT);
         menuContainer.getChildren().addAll(halamanUtamaBtn, materiBtn, quizBtn);
 
-        header.getChildren().addAll(logoContainer, spacer1, menuContainer);
+        header.getChildren().addAll(logoText, spacer, menuContainer);
 
         return header;
+    }
+
+    private Button createNavButton(String text) {
+        Button button = new Button(text);
+        String baseStyle = "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 8 15; -fx-border-color: transparent; -fx-border-width: 0 0 2 0;";
+        String hoverStyle = "-fx-background-color: transparent; -fx-text-fill: #F4A261; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 8 15; -fx-border-color: #F4A261; -fx-border-width: 0 0 2 0;";
+
+        button.setStyle(baseStyle);
+        button.setOnMouseEntered(e -> button.setStyle(hoverStyle));
+        button.setOnMouseExited(e -> button.setStyle(baseStyle));
+
+        return button;
     }
 
     private Button createPrimaryButton(String text, String color) {
@@ -562,9 +628,12 @@ public class MainView {
         if (currentPage != null) {
             root.getChildren().remove(currentPage);
         }
+        // Hapus juga elemen lain seperti karakter agar tidak menumpuk
+        root.getChildren().removeIf(node -> node instanceof ImageView);
     }
 
     public Scene getScene() {
         return scene;
     }
 }
+
