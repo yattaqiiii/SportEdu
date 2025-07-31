@@ -266,43 +266,28 @@ public class MatchingQuizFXView {
         HBox row = new HBox(20);
         row.setAlignment(Pos.CENTER_LEFT);
 
-        // Image container with light beige background that matches the dot color scheme
+        // Image container with mustard background that adapts to image size with padding
         VBox imageContainer = new VBox();
         imageContainer.setAlignment(Pos.CENTER);
-        imageContainer.setStyle("-fx-background-color: #F5E6A3; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 4); -fx-padding: 8;");
+        imageContainer.setStyle("-fx-background-color: #D4AC0D; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 4); -fx-padding: 15;");
 
         try {
             ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream(imagePath)));
-            // Let image maintain its natural proportions
+            // Let image maintain its natural proportions but with max constraints
+            imageView.setFitWidth(180);
+            imageView.setFitHeight(110);
             imageView.setPreserveRatio(true);
 
-            // Get image natural size and adapt container
-            Image img = imageView.getImage();
-            double imgWidth = img.getWidth();
-            double imgHeight = img.getHeight();
-
-            // Scale to fit within max bounds while preserving ratio
-            double maxWidth = 180;
-            double maxHeight = 110;
-            double scaleX = maxWidth / imgWidth;
-            double scaleY = maxHeight / imgHeight;
-            double scale = Math.min(scaleX, scaleY);
-
-            double finalWidth = imgWidth * scale;
-            double finalHeight = imgHeight * scale;
-
-            imageView.setFitWidth(finalWidth);
-            imageView.setFitHeight(finalHeight);
-
-            // Container adapts to actual image size plus padding (stroke effect)
+            // Container adapts to image size plus padding (stroke effect)
             imageContainer.getChildren().add(imageView);
-            imageContainer.setPrefSize(finalWidth + 16, finalHeight + 16); // 8px padding on each side
 
+            // Set container size based on image bounds plus padding
+            imageContainer.setPrefSize(210, 140); // Added extra space for stroke effect
         } catch (Exception e) {
             Label placeholder = new Label("Gambar " + (index + 1));
             placeholder.setStyle("-fx-font-size: 16px; -fx-text-fill: #666;");
             imageContainer.getChildren().add(placeholder);
-            imageContainer.setPrefSize(196, 126); // Default size with padding
+            imageContainer.setPrefSize(210, 140);
         }
 
         // Larger connection point (dot)
@@ -365,19 +350,18 @@ public class MatchingQuizFXView {
 
         connectPoint.setOnAction(e -> completeConnection(answerId, connectPoint));
 
-        // Answer container with light beige background matching the dots
+        // Answer container with mustard background
         VBox answerContainer = new VBox();
         answerContainer.setAlignment(Pos.CENTER);
         answerContainer.setPrefSize(200, 130);
-        answerContainer.setStyle("-fx-background-color: #F5E6A3; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 4); -fx-padding: 10;");
+        answerContainer.setStyle("-fx-background-color: #D4AC0D; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 4);");
 
-        // Answer label with blue text, bolder and perfectly centered
+        // Answer label with blue text, bolder and centered
         Label answerLabel = new Label(answerText);
-        answerLabel.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 900; -fx-text-fill: #516BB0; -fx-text-alignment: center;");
+        answerLabel.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #516BB0; -fx-text-alignment: center;");
         answerLabel.setWrapText(true);
         answerLabel.setMaxWidth(180);
-        answerLabel.setAlignment(Pos.CENTER);
-        VBox.setVgrow(answerLabel, Priority.ALWAYS);
+        answerLabel.setAlignment(Pos.CENTER); // Ensure text is centered
         answerContainer.getChildren().add(answerLabel);
 
         answerButtons.put(answerId, connectPoint);
@@ -493,7 +477,7 @@ public class MatchingQuizFXView {
     private void checkAllConnectionsComplete() {
         // Check if all images have connections
         if (connections.size() == imageIds.size()) {
-            // All connections made - always show results first
+            // All connections made - automatically proceed to next round or show results
             javafx.application.Platform.runLater(() -> {
                 try {
                     Thread.sleep(1000); // Brief pause to show all lines
@@ -501,8 +485,11 @@ public class MatchingQuizFXView {
                     Thread.currentThread().interrupt();
                 }
 
-                // Always show results when all connections are complete
-                checkAnswers();
+                if (onNextRound != null) {
+                    onNextRound.onNextRound();
+                } else {
+                    checkAnswers();
+                }
             });
         }
     }
@@ -512,12 +499,12 @@ public class MatchingQuizFXView {
         for (Button button : imageButtons.values()) {
             try {
                 ImageView normalDot = new ImageView(new Image(getClass().getResourceAsStream("/images/Cocokkan gambar titik.png")));
-                normalDot.setFitWidth(30);
-                normalDot.setFitHeight(30);
+                normalDot.setFitWidth(20);
+                normalDot.setFitHeight(20);
                 normalDot.setPreserveRatio(true);
                 button.setGraphic(normalDot);
             } catch (Exception e) {
-                button.setStyle("-fx-background-color: #516BB0; -fx-background-radius: 17; -fx-border-width: 0;");
+                button.setStyle("-fx-background-color: #516BB0; -fx-background-radius: 12; -fx-border-width: 0;");
             }
         }
 
@@ -525,121 +512,34 @@ public class MatchingQuizFXView {
         for (Button button : answerButtons.values()) {
             try {
                 ImageView normalDot = new ImageView(new Image(getClass().getResourceAsStream("/images/Cocokkan gambar titik.png")));
-                normalDot.setFitWidth(30);
-                normalDot.setFitHeight(30);
+                normalDot.setFitWidth(20);
+                normalDot.setFitHeight(20);
                 normalDot.setPreserveRatio(true);
                 button.setGraphic(normalDot);
             } catch (Exception e) {
-                button.setStyle("-fx-background-color: #F5E6A3; -fx-background-radius: 17; -fx-border-width: 0;");
+                button.setStyle("-fx-background-color: #F5E6A3; -fx-background-radius: 12; -fx-border-width: 0;");
             }
         }
     }
 
     private void checkAnswers() {
-        // Calculate score
-        int correctCount = 0;
+        int correctAnswers = 0;
+
+        // Count correct answers
         for (int i = 0; i < imageIds.size(); i++) {
             String imageId = imageIds.get(i);
             String userAnswer = connections.get(imageId);
             String correctAnswer = correctAnswerIds.get(i);
 
             if (userAnswer != null && userAnswer.equals(correctAnswer)) {
-                correctCount++;
+                correctAnswers++;
             }
         }
 
-        // Show compact result display
-        showCompactResults(correctCount, imageIds.size());
-    }
-
-    /**
-     * Display compact results following guess image quiz concept
-     */
-    public void showCompactResults(int correctAnswers, int totalQuestions) {
-        // Create semi-transparent overlay
-        StackPane overlay = new StackPane();
-        overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
-        overlay.setPrefSize(1280, 832);
-
-        // Very compact result container matching the reference design
-        VBox resultContainer = new VBox(15);
-        resultContainer.setAlignment(Pos.CENTER);
-        resultContainer.setPrefSize(300, 240);  // Sedikit diperbesar untuk tombol yang lebih besar
-        resultContainer.setMaxSize(300, 240);
-        resultContainer.setStyle("-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 2); -fx-padding: 20;");
-
-        // Skor Akhir image header - ukuran tetap kecil
-        try {
-            ImageView scoreImage = new ImageView(new Image(getClass().getResourceAsStream("/images/Skor Akhir.png")));
-            scoreImage.setFitHeight(35);
-            scoreImage.setPreserveRatio(true);
-            resultContainer.getChildren().add(scoreImage);
-        } catch (Exception e) {
-            Label scoreLabel = new Label("Skor Akhir");
-            scoreLabel.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #516BB0;");
-            resultContainer.getChildren().add(scoreLabel);
+        // Trigger callback with results
+        if (onGameComplete != null) {
+            onGameComplete.onGameComplete(correctAnswers, imageIds.size());
         }
-
-        // Score display
-        Label scoreText = new Label(correctAnswers + "/" + totalQuestions);
-        scoreText.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #2C5F2D;");
-        resultContainer.getChildren().add(scoreText);
-
-        // Percentage
-        int percentage = (int) Math.round((double) correctAnswers / totalQuestions * 100);
-        Label percentageLabel = new Label(percentage + "%");
-        percentageLabel.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2C5F2D;");
-        resultContainer.getChildren().add(percentageLabel);
-
-        // Single yellow back button using Kembali_kuning.png - ukuran diperbesar lagi
-        Button backButton = new Button();
-        backButton.setPrefSize(180, 60);  // Diperbesar lagi dari 140x50 menjadi 180x60
-        backButton.setStyle("-fx-background-color: transparent; -fx-border-width: 0; -fx-padding: 0; -fx-cursor: hand;");
-
-        try {
-            ImageView backIcon = new ImageView(new Image(getClass().getResourceAsStream("/images/Kembali_kuning.png")));
-            backIcon.setFitWidth(180);  // Sesuaikan dengan ukuran button
-            backIcon.setFitHeight(60);
-            backIcon.setPreserveRatio(true);
-            backButton.setGraphic(backIcon);
-        } catch (Exception e) {
-            // Fallback button with yellow styling
-            backButton.setText("Kembali");
-            backButton.setStyle("-fx-background-color: #F5E6A3; -fx-background-radius: 25; -fx-text-fill: #516BB0; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: bold; -fx-cursor: hand;");
-        }
-
-        // Perbaiki action handler untuk memastikan tombol bekerja
-        backButton.setOnAction(e -> {
-            System.out.println("Back button clicked!"); // Debug log
-
-            // Remove overlay first
-            StackPane mainStack = (StackPane) view.getCenter();
-            mainStack.getChildren().remove(overlay);
-
-            // Then call the completion handler
-            if (onGameComplete != null) {
-                onGameComplete.onGameComplete(correctAnswers, totalQuestions);
-            } else {
-                System.out.println("onGameComplete is null!"); // Debug log
-            }
-        });
-
-        // Tambahkan hover effect untuk memastikan tombol responsif
-        backButton.setOnMouseEntered(e -> {
-            backButton.setStyle(backButton.getStyle() + "; -fx-opacity: 0.8;");
-        });
-
-        backButton.setOnMouseExited(e -> {
-            backButton.setStyle(backButton.getStyle().replace("; -fx-opacity: 0.8;", ""));
-        });
-
-        resultContainer.getChildren().add(backButton);
-
-        overlay.getChildren().add(resultContainer);
-
-        // Add overlay to main view
-        StackPane mainStack = (StackPane) view.getCenter();
-        mainStack.getChildren().add(overlay);
     }
 
     /**
@@ -680,47 +580,17 @@ public class MatchingQuizFXView {
         navButtons.setAlignment(Pos.CENTER_RIGHT);
 
         navHomeButton = new Button("Halaman Utama");
-        navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16; -fx-cursor: hand;");
-        navHomeButton.setOnMouseEntered(e -> navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16; -fx-cursor: hand;"));
-        navHomeButton.setOnMouseExited(e -> navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16; -fx-cursor: hand;"));
-        // Perbaiki action handler untuk tombol Home dengan debug
-        navHomeButton.setOnAction(e -> {
-            System.out.println("🏠 NAVBAR HOME CLICKED in MatchingQuizFXView!");
-            System.out.println("onGameComplete is null? " + (onGameComplete == null));
-            if (onGameComplete != null) {
-                System.out.println("Calling onGameComplete(0, 0) for Home navigation");
-                onGameComplete.onGameComplete(0, 0); // Dummy values for navigation
-            } else {
-                System.out.println("❌ ERROR: onGameComplete is NULL! Cannot navigate to Home!");
-            }
-        });
+        navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+        navHomeButton.setOnMouseEntered(e -> navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navHomeButton.setOnMouseExited(e -> navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
 
         navMateriButton = new Button("Materi");
-        navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16; -fx-cursor: hand;");
-        navMateriButton.setOnMouseEntered(e -> navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16; -fx-cursor: hand;"));
-        navMateriButton.setOnMouseExited(e -> navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16; -fx-cursor: hand;"));
-        // Perbaiki action handler untuk tombol Materi dengan debug
-        navMateriButton.setOnAction(e -> {
-            System.out.println("📚 NAVBAR MATERI CLICKED in MatchingQuizFXView!");
-            System.out.println("onGameComplete is null? " + (onGameComplete == null));
-            if (onGameComplete != null) {
-                System.out.println("Calling onGameComplete(-1, -1) for Materi navigation");
-                onGameComplete.onGameComplete(-1, -1); // Special values to indicate Materi navigation
-            } else {
-                System.out.println("❌ ERROR: onGameComplete is NULL! Cannot navigate to Materi!");
-            }
-        });
+        navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+        navMateriButton.setOnMouseEntered(e -> navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navMateriButton.setOnMouseExited(e -> navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
 
         navQuizButton = new Button("Quiz");
-        navQuizButton.setStyle("-fx-background-color: rgba(245, 230, 163, 0.2); -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 600; -fx-border-width: 0; -fx-padding: 8 16; -fx-background-radius: 5; -fx-cursor: hand;");
-        // Quiz button is current page, so no action needed but add hover for consistency
-        navQuizButton.setOnMouseEntered(e -> navQuizButton.setStyle("-fx-background-color: rgba(245, 230, 163, 0.3); -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 600; -fx-border-width: 0; -fx-padding: 8 16; -fx-background-radius: 5; -fx-cursor: hand;"));
-        navQuizButton.setOnMouseExited(e -> navQuizButton.setStyle("-fx-background-color: rgba(245, 230, 163, 0.2); -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 600; -fx-border-width: 0; -fx-padding: 8 16; -fx-background-radius: 5; -fx-cursor: hand;"));
-        // Quiz button action with debug
-        navQuizButton.setOnAction(e -> {
-            System.out.println("🎮 NAVBAR QUIZ CLICKED in MatchingQuizFXView!");
-            System.out.println("Already on Quiz page - no navigation needed");
-        });
+        navQuizButton.setStyle("-fx-background-color: rgba(245, 230, 163, 0.2); -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 600; -fx-border-width: 0; -fx-padding: 8 16; -fx-background-radius: 5;");
 
         navButtons.getChildren().addAll(navHomeButton, navMateriButton, navQuizButton);
         navbar.getChildren().add(navButtons);

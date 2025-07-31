@@ -226,34 +226,13 @@ public class MainPresenter {
     }
 
     private void attachQuizModePageEvents() {
-        System.out.println("🎯 ATTACH QUIZ MODE PAGE EVENTS");
-
         // Event handlers untuk tombol Mulai dan Petunjuk
         if (mainView.mulaiButton != null) {
-            System.out.println("✅ mulaiButton found - setting up action");
-            // Clear any existing handler first
-            mainView.mulaiButton.setOnAction(null);
-            // Set new handler
-            mainView.mulaiButton.setOnAction(e -> {
-                System.out.println("🚀 MULAI BUTTON CLICKED!");
-                showQuizModeSelectionPage();
-            });
-        } else {
-            System.out.println("❌ mulaiButton is NULL!");
+            mainView.mulaiButton.setOnAction(e -> showQuizModeSelectionPage());
         }
-
         if (mainView.petunjukButton != null) {
-            System.out.println("✅ petunjukButton found - setting up action");
-            mainView.petunjukButton.setOnAction(null);
-            mainView.petunjukButton.setOnAction(e -> {
-                System.out.println("📖 PETUNJUK BUTTON CLICKED!");
-                showInstructionsPage();
-            });
-        } else {
-            System.out.println("❌ petunjukButton is NULL!");
+            mainView.petunjukButton.setOnAction(e -> showInstructionsPage());
         }
-
-        System.out.println("🎯 QUIZ MODE PAGE EVENTS ATTACHED");
     }
 
     // Method navigasi sederhana untuk kompatibilitas
@@ -499,22 +478,6 @@ public class MainPresenter {
         matchingView.setOnNextRound(() -> {
             currentMatchingRound++;
             tampilkanMencocokkanGambarRound(currentMatchingRound);
-        });
-
-        // Tambahkan callback untuk onGameComplete yang hilang
-        matchingView.setOnGameComplete((correctAnswers, totalQuestions) -> {
-            // Periksa nilai khusus untuk navigasi navbar
-            if (correctAnswers == 0 && totalQuestions == 0) {
-                // Home button clicked
-                showLandingPage();
-            } else if (correctAnswers == -1 && totalQuestions == -1) {
-                // Materi button clicked
-                showMateriPage();
-            } else {
-                // Normal game completion - kembali ke quiz mode (BUKAN ke hasil terpisah)
-                // Karena MatchingQuizFXView sudah menampilkan hasil overlay sendiri
-                showQuizModeSelectionPage();
-            }
         });
 
         matchingView.getKembaliButton().setOnAction(e -> showQuizModePage());
