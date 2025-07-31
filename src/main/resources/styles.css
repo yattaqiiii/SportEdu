@@ -1,10 +1,301 @@
-/* General Styles */
-.root {
-    -fx-font-family: 'Arial';
+/* SportEdu Application Styles - Landing Page dengan ukuran fix 1280x832 */
+
+/* Font Loading */
+@font-face {
+    font-family: 'Poppins';
+    src: url('Poppins/Poppins-Regular.ttf');
+    font-weight: normal;
 }
 
+@font-face {
+    font-family: 'Poppins';
+    src: url('Poppins/Poppins-Bold.ttf');
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('Poppins/Poppins-SemiBold.ttf');
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: 'Poppins';
+    src: url('Poppins/Poppins-Medium.ttf');
+    font-weight: 500;
+}
+
+/* General Styles */
+.root {
+    -fx-font-family: 'Poppins', 'Arial', sans-serif;
+    -fx-background-color: #F5E6A3;
+}
+
+/* Landing Page Specific Styles */
+.landing-page-container {
+    -fx-pref-width: 1280;
+    -fx-pref-height: 832;
+    -fx-max-width: 1280;
+    -fx-max-height: 832;
+}
+
+/* Blue Navbar Styles */
+.navbar-blue {
+    -fx-background-color: #516BB0;
+    -fx-padding: 15 40;
+    -fx-alignment: center-left;
+}
+
+.navbar-transparent {
+    -fx-background-color: transparent;
+    -fx-padding: 15 40;
+    -fx-alignment: center-left;
+}
+
+.app-logo-text {
+    -fx-font-family: 'Poppins', Arial;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.nav-text-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-family: 'Poppins', Arial;
+    -fx-font-size: 16px;
+    -fx-font-weight: 500;
+    -fx-border-width: 0;
+    -fx-padding: 8 16;
+    -fx-cursor: hand;
+}
+
+.nav-text-button:hover {
+    -fx-text-fill: #F5E6A3;
+}
+
+/* Content Box Styles */
+.content-box {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 12, 0, 0, 6);
+    -fx-padding: 50 60 50 60;
+    -fx-max-width: 800;
+    -fx-alignment: center;
+}
+
+.content-background {
+    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 8, 0, 0, 4);
+}
+
+.landing-background {
+    -fx-background-color: #F5E6A3;
+}
+
+.hero-title {
+    -fx-font-family: 'Poppins', Arial;
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1A1E2C;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.hero-subtitle {
+    -fx-font-family: 'Poppins', Arial;
+    -fx-font-size: 18px;
+    -fx-font-weight: 400;
+    -fx-text-fill: #516BB0;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+}
+
+.page-title {
+    -fx-font-family: 'Poppins', Arial;
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1A1E2C;
+    -fx-text-alignment: center;
+}
+
+/* Main Action Buttons */
+.main-button {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 4);
+    -fx-cursor: hand;
+}
+
+.main-button:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 12, 0, 0, 6);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.main-button:pressed {
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Sport Cards */
+.sport-card {
+    -fx-background-color: white;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+    -fx-padding: 20;
+}
+
+.sport-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 8);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.sport-card:pressed {
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+/* Navigation Buttons */
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.nav-button:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 3);
+}
+
+/* Primary Action Buttons */
+.primary-action-button {
+    -fx-background-color: #516BB0;
+    -fx-text-fill: white;
+    -fx-font-family: 'Poppins', Arial;
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 25;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(81,107,176,0.3), 8, 0, 0, 4);
+}
+
+.primary-action-button:hover {
+    -fx-background-color: #455a96;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.primary-action-button:pressed {
+    -fx-background-color: #3d4f82;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Secondary Action Buttons */
+.secondary-action-button {
+    -fx-background-color: #F5E6A3;
+    -fx-text-fill: #1A1E2C;
+    -fx-font-family: 'Poppins', Arial;
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 25;
+    -fx-border-color: #516BB0;
+    -fx-border-width: 2;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+.secondary-action-button:hover {
+    -fx-background-color: #f0d97a;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.secondary-action-button:pressed {
+    -fx-background-color: #ebd066;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* Result Modal */
+.result-modal {
+    -fx-background-color: white;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 15, 0, 0, 8);
+    -fx-padding: 40;
+    -fx-border-width: 0;
+}
+
+.result-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2ecc71;
+}
+
+.result-score {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #516BB0;
+}
+
+.result-message {
+    -fx-font-size: 18px;
+    -fx-text-fill: #1A1E2C;
+    -fx-text-alignment: center;
+    -fx-line-spacing: 2;
+}
+
+/* Explanation Page */
+.explanation-container {
+    -fx-background-color: #F5E6A3;
+    -fx-padding: 30;
+}
+
+.technique-image {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
+    -fx-background-radius: 15;
+}
+
+.explanation-text {
+    -fx-font-size: 20px;
+    -fx-text-fill: #1A1E2C;
+    -fx-line-spacing: 4;
+    -fx-text-alignment: center;
+    -fx-font-weight: 400;
+}
+
+/* Animation Page */
+.animation-container {
+    -fx-background-color: #F5E6A3;
+    -fx-padding: 30;
+}
+
+.volume-button {
+    -fx-background-color: #516BB0;
+    -fx-background-radius: 30;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 3);
+}
+
+.volume-button:hover {
+    -fx-background-color: #3d5a9e;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0, 0, 4);
+}
+
+/* Scroll Panes */
 .scroll-pane {
     -fx-background-color: transparent;
+    -fx-background-insets: 0;
     -fx-padding: 0;
 }
 
@@ -12,119 +303,33 @@
     -fx-background-color: transparent;
 }
 
-/* Background */
-.background {
-    -fx-background-color: #F5E6A3;
-    -fx-background-image: radial-gradient(circle at 20px 20px, #F4A261 2px, transparent 2px);
-    -fx-background-size: 40px 40px;
-}
-
-/* Header */
-.header {
-    -fx-background-color: #6B73C1;
-    -fx-padding: 20 40 0 40;
-    -fx-alignment: center-left;
-}
-
-.header .label {
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-text-fill: white;
-}
-
-.header .button {
+.scroll-pane > .scroll-bar:vertical {
     -fx-background-color: transparent;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-border-color: transparent;
 }
 
-/* Content Area */
-.content-area {
-    -fx-background-color: white;
-    -fx-background-radius: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);
+.scroll-pane > .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+/* Responsive Text */
+.responsive-text {
+    -fx-text-alignment: center;
+    -fx-line-spacing: 2;
+}
+
+/* Utilities */
+.center-content {
     -fx-alignment: center;
 }
 
-/* Titles and Labels */
-.title-label {
-    -fx-font-size: 48px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2E86AB;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 2, 2);
+.shadow-small {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);
 }
 
-.subtitle-label {
-    -fx-font-size: 20px;
-    -fx-text-fill: #F4A261;
+.shadow-medium {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 8, 0, 0, 4);
 }
 
-.page-title {
-    -fx-font-size: 36px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2E86AB;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 2, 2);
+.shadow-large {
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0, 0, 6);
 }
-
-.teknik-title {
-    -fx-font-size: 32px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #2E86AB;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0, 2, 2);
-}
-
-.instruction-label {
-    -fx-font-size: 16px;
-    -fx-text-fill: #666;
-}
-
-/* Buttons */
-.primary-button {
-    -fx-text-fill: white;
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
-    -fx-pref-width: 200;
-    -fx-pref-height: 50;
-    -fx-background-radius: 25;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 3);
-}
-
-.secondary-button {
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-pref-width: 150;
-    -fx-pref-height: 40;
-    -fx-background-radius: 20;
-}
-
-.sport-button {
-    -fx-text-fill: white;
-    -fx-font-size: 20px;
-    -fx-font-weight: bold;
-    -fx-pref-width: 300;
-    -fx-pref-height: 80;
-    -fx-background-radius: 40;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 3);
-}
-
-.teknik-button {
-    -fx-background-color: #F4A261;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-font-weight: bold;
-    -fx-pref-width: 150;
-    -fx-pref-height: 50;
-    -fx-background-radius: 25;
-}
-
-.arrow-button {
-    -fx-background-color: #E63946;
-    -fx-text-fill: white;
-    -fx-font-size: 24px;
-    -fx-pref-width: 60;
-    -fx-pref-height: 60;
-    -fx-background-radius: 30;
-}
-

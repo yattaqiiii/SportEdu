@@ -1,88 +1,86 @@
 package com.sportedu.view;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
+import com.sportedu.model.Soal;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
-public class QuizView extends JPanel {
-    private final JLabel questionCounterLabel;
-    private final JLabel imageLabel;
-    private final List<JButton> optionButtons;
-    private final JButton backButton;
+/**
+ * View untuk menampilkan gameplay kuis (satu soal per layar).
+ * File ini diperbaiki dengan menambahkan semua getter yang dibutuhkan.
+ */
+public class QuizView {
+
+    private final VBox view;
+    private final Button kembaliButton;
+    public Button[] pilihanButtons;
 
     public QuizView() {
-        setLayout(new BorderLayout(10, 10));
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        view = new VBox(40);
+        view.setAlignment(Pos.CENTER);
+        view.setPadding(new Insets(50));
+        view.getStyleClass().add("landing-background");
 
-        // Panel Atas: Judul dan Counter Soal
-        JPanel topPanel = new JPanel(new BorderLayout());
-        JLabel titleLabel = new JLabel("Kuis Tebak Gambar", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        questionCounterLabel = new JLabel("Soal 1 / 10", SwingConstants.CENTER);
-        questionCounterLabel.setFont(new Font("Arial", Font.PLAIN, 16));
-        topPanel.add(titleLabel, BorderLayout.NORTH);
-        topPanel.add(questionCounterLabel, BorderLayout.CENTER);
-        add(topPanel, BorderLayout.NORTH);
-
-        // Panel Tengah: Gambar Soal
-        imageLabel = new JLabel();
-        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        imageLabel.setPreferredSize(new Dimension(400, 300));
-        add(imageLabel, BorderLayout.CENTER);
-
-        // Panel Bawah: Pilihan Jawaban dan Tombol Kembali
-        JPanel bottomPanel = new JPanel(new BorderLayout());
-        JPanel optionsPanel = new JPanel(new GridLayout(2, 2, 10, 10));
-        optionButtons = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            JButton button = new JButton("Opsi " + (i + 1));
-            button.setFont(new Font("Arial", Font.BOLD, 16));
-            optionButtons.add(button);
-            optionsPanel.add(button);
-        }
-        bottomPanel.add(optionsPanel, BorderLayout.CENTER);
-
-        backButton = new JButton("Kembali ke Menu");
-        bottomPanel.add(backButton, BorderLayout.SOUTH);
-
-        add(bottomPanel, BorderLayout.SOUTH);
+        kembaliButton = UIFactory.createNavButton("/images/Back.png", 120, 50);
     }
 
-    public void setQuestion(int questionNumber, int totalQuestions, String imagePath, String[] options) {
-        questionCounterLabel.setText("Soal " + questionNumber + " / " + totalQuestions);
+    public void displaySoal(Soal soal) {
+        view.getChildren().clear();
 
+        // Judul quiz
+        Label title = new Label("Tebak Gambar Ini!");
+        title.getStyleClass().add("page-title");
+
+        // Container untuk konten quiz dengan background putih
+        VBox contentContainer = new VBox(30);
+        contentContainer.setAlignment(Pos.CENTER);
+        contentContainer.setPadding(new Insets(40));
+        contentContainer.getStyleClass().add("content-background");
+
+        // Gambar soal
+        ImageView gambarSoal = new ImageView();
         try {
-            ImageIcon originalIcon = new ImageIcon(getClass().getResource(imagePath));
-            Image scaledImage = originalIcon.getImage().getScaledInstance(400, 300, Image.SCALE_SMOOTH);
-            imageLabel.setIcon(new ImageIcon(scaledImage));
+            Image image = new Image(getClass().getResourceAsStream(soal.getPertanyaan()));
+            gambarSoal.setImage(image);
         } catch (Exception e) {
-            imageLabel.setIcon(null);
-            imageLabel.setText("Gambar tidak ditemukan: " + imagePath);
+            System.err.println("Error loading quiz image: " + soal.getPertanyaan());
+        }
+        gambarSoal.setFitHeight(300);
+        gambarSoal.setFitWidth(400);
+        gambarSoal.setPreserveRatio(true);
+        gambarSoal.getStyleClass().add("technique-image");
+
+        // Grid untuk pilihan jawaban (2x2)
+        GridPane pilihanJawabanPane = new GridPane();
+        pilihanJawabanPane.setAlignment(Pos.CENTER);
+        pilihanJawabanPane.setHgap(20);
+        pilihanJawabanPane.setVgap(20);
+
+        pilihanButtons = new Button[4];
+        for (int i = 0; i < soal.getPilihanJawaban().length; i++) {
+            pilihanButtons[i] = UIFactory.createQuizOptionButton(soal.getPilihanJawaban()[i], i);
+            int row = i / 2;
+            int col = i % 2;
+            pilihanJawabanPane.add(pilihanButtons[i], col, row);
         }
 
-        for (int i = 0; i < optionButtons.size(); i++) {
-            optionButtons.get(i).setText(options[i]);
-            // Hapus listener lama sebelum menambahkan yang baru
-            for (ActionListener al : optionButtons.get(i).getActionListeners()) {
-                optionButtons.get(i).removeActionListener(al);
-            }
-        }
+        contentContainer.getChildren().addAll(gambarSoal, pilihanJawabanPane);
+        view.getChildren().addAll(title, contentContainer, kembaliButton);
     }
 
-    public void addOptionButtonListener(int index, ActionListener listener) {
-        if (index < optionButtons.size()) {
-            optionButtons.get(index).addActionListener(listener);
-        }
+    // --- GETTER METHODS (YANG SEBELUMNYA HILANG) ---
+
+    public Parent getView() {
+        return view;
     }
 
-    public void addBackListener(ActionListener listener) {
-        backButton.addActionListener(listener);
-    }
-
-    public void showResult(int score, int totalQuestions) {
-        String message = String.format("Kuis Selesai!\nSkor Anda: %d dari %d", score, totalQuestions);
-        JOptionPane.showMessageDialog(this, message, "Hasil Kuis", JOptionPane.INFORMATION_MESSAGE);
+    public Button getKembaliButton() {
+        return kembaliButton;
     }
 }

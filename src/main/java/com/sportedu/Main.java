@@ -1,30 +1,34 @@
 package com.sportedu;
 
-import com.formdev.flatlaf.FlatLightLaf;
 import com.sportedu.model.SportEduModel;
 import com.sportedu.presenter.MainPresenter;
 import com.sportedu.view.MainView;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException; // <-- IMPORT YANG HILANG SUDAH DITAMBAHKAN
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
+
+    @Override
+    public void start(Stage primaryStage) {
+        // Load custom font
+        Font.loadFont(getClass().getResourceAsStream("/Poppins/Poppins-Regular.ttf"), 10);
+        Font.loadFont(getClass().getResourceAsStream("/Poppins/Poppins-Bold.ttf"), 10);
+
+        MainView mainView = new MainView(primaryStage);
+        SportEduModel model = new SportEduModel(); // Model dibuat sekali
+        new MainPresenter(mainView, model); // Presenter utama mengontrol alur
+
+        Scene scene = new Scene(mainView.getRoot(), 1024, 768);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+
+        primaryStage.setTitle("SportEdu - Media Pembelajaran Olahraga");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
     public static void main(String[] args) {
-        // Mengatur Look and Feel FlatLaf agar tampilan modern
-        try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (UnsupportedLookAndFeelException e) {
-            // Sebaiknya cetak error trace untuk debugging jika terjadi masalah
-            e.printStackTrace();
-            System.err.println("Failed to initialize LaF");
-        }
-
-        SwingUtilities.invokeLater(() -> {
-            SportEduModel model = new SportEduModel();
-            MainView view = new MainView(model); // Kirim model ke view untuk inisialisasi data
-            new MainPresenter(view, model);
-
-            view.setVisible(true);
-        });
+        launch(args);
     }
 }

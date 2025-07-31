@@ -1,76 +1,59 @@
 package com.sportedu.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+/**
+ * Model utama yang menyimpan semua data aplikasi.
+ * File ini diperbaiki dengan menambahkan semua getter yang dibutuhkan.
+ */
 public class SportEduModel {
 
-    private final List<Soal> soalList;
-    private final Map<String, List<Teknik>> dataMateri;
-    private final List<SoalMencocokkan> soalMencocokkanList;
+    private final List<Teknik> sepakBolaTekniks;
+    private final List<Teknik> badmintonTekniks;
+    private final List<Soal> tebakGambarSoal;
 
     public SportEduModel() {
-        soalList = new ArrayList<>();
-        dataMateri = new HashMap<>();
-        soalMencocokkanList = new ArrayList<>();
-        loadSoalData();
-        loadMateriData();
-        loadSoalMencocokkanData();
+        // Data untuk materi Sepak Bola - 4 teknik sesuai permintaan
+        sepakBolaTekniks = new ArrayList<>();
+        sepakBolaTekniks.add(new Teknik("Passing", "Mengoper bola kepada rekan satu tim dengan akurat.", "/images/soccer_passing.jpg", "/images/gif1.gif"));
+        sepakBolaTekniks.add(new Teknik("Dribbling", "Menggiring bola sambil bergerak menggunakan kaki.", "/images/soccer_dribble.jpg", "/images/gif2.gif"));
+        sepakBolaTekniks.add(new Teknik("Shooting", "Menendang bola ke arah gawang untuk mencetak gol.", "/images/soccer_shoot.jpg", "/images/gif3.gif"));
+        sepakBolaTekniks.add(new Teknik("Heading", "Menyundul bola menggunakan kepala untuk mengoper atau mencetak gol.", "/images/soccer_heading.jpg", "/images/gif4.gif"));
+
+        // Data untuk materi Badminton - 4 teknik sesuai permintaan
+        badmintonTekniks = new ArrayList<>();
+        badmintonTekniks.add(new Teknik("Servis", "Pukulan awal untuk memulai permainan badminton.", "/images/badminton_service.jpg", "/images/gif5.gif"));
+        badmintonTekniks.add(new Teknik("Smash", "Pukulan keras dan menukik ke area lawan untuk mencetak poin.", "/images/badminton_smash.jpg", "/images/gif6.gif"));
+        badmintonTekniks.add(new Teknik("Footwork", "Gerakan kaki untuk berpindah posisi dengan cepat dan efisien.", "/images/badminton_footwork.jpg", "/images/gif7.gif"));
+        badmintonTekniks.add(new Teknik("Netting", "Pukulan halus di dekat net agar shuttlecock jatuh tipis di area lawan.", "/images/badminton_netting.jpg", "/images/gif8.gif"));
+
+        // Data untuk Kuis Tebak Gambar - 10 soal
+        tebakGambarSoal = new ArrayList<>();
+        tebakGambarSoal.add(new Soal("/images/soccer_dribble.jpg", new String[]{"Shooting", "Dribbling", "Passing", "Heading"}, 1));
+        tebakGambarSoal.add(new Soal("/images/badminton_smash.jpg", new String[]{"Servis", "Netting", "Smash", "Footwork"}, 2));
+        tebakGambarSoal.add(new Soal("/images/soccer_heading.jpg", new String[]{"Heading", "Goalkeeping", "Passing", "Dribbling"}, 0));
+        tebakGambarSoal.add(new Soal("/images/soccer_shoot.jpg", new String[]{"Dribbling", "Passing", "Shooting", "Heading"}, 2));
+        tebakGambarSoal.add(new Soal("/images/badminton_service.jpg", new String[]{"Servis", "Smash", "Netting", "Footwork"}, 0));
+        tebakGambarSoal.add(new Soal("/images/soccer_goal.jpg", new String[]{"Shooting", "Goalkeeping", "Passing", "Dribbling"}, 1));
+        tebakGambarSoal.add(new Soal("/images/badminton_netting.jpg", new String[]{"Smash", "Servis", "Footwork", "Netting"}, 3));
+        tebakGambarSoal.add(new Soal("/images/soccer_tackle.jpg", new String[]{"Tackling", "Passing", "Shooting", "Heading"}, 0));
+        tebakGambarSoal.add(new Soal("/images/soccer_goalkeeper.jpg", new String[]{"Shooting", "Goalkeeping", "Passing", "Dribbling"}, 1));
+        tebakGambarSoal.add(new Soal("/images/soccer_dribble.jpg", new String[]{"Passing", "Dribbling", "Shooting", "Heading"}, 1));
     }
 
-    private void loadMateriData() {
-        List<Teknik> sepakBolaTeknik = new ArrayList<>();
-        sepakBolaTeknik.add(new Teknik("Passing", "Passing adalah teknik mengoper bola ke rekan satu tim.", "/assets/gif1.webp"));
-        sepakBolaTeknik.add(new Teknik("Dribbling", "Dribbling adalah teknik menggiring bola melewati lawan.", "/assets/gif2.webp"));
-        sepakBolaTeknik.add(new Teknik("Shooting", "Shooting adalah teknik menendang bola ke arah gawang.", "/assets/gif3.webp"));
-        sepakBolaTeknik.add(new Teknik("Heading", "Heading adalah teknik menyundul bola menggunakan kepala.", "/assets/gif4.webp"));
-        dataMateri.put("Sepak Bola", sepakBolaTeknik);
+    // --- GETTER METHODS (YANG SEBELUMNYA HILANG) ---
 
-        List<Teknik> badmintonTeknik = new ArrayList<>();
-        badmintonTeknik.add(new Teknik("Servis", "Servis adalah pukulan awal untuk memulai permainan.", "/assets/gif5.webp"));
-        badmintonTeknik.add(new Teknik("Smash", "Smash adalah pukulan keras dan menukik tajam.", "/assets/gif6.webp"));
-        badmintonTeknik.add(new Teknik("Footwork", "Footwork adalah pergerakan kaki yang efisien.", "/assets/gif7.webp"));
-        badmintonTeknik.add(new Teknik("Netting", "Netting adalah pukulan pelan di dekat net.", "/assets/gif18.webp"));
-        dataMateri.put("Badminton", badmintonTeknik);
+    public List<Teknik> getSepakBolaTekniks() {
+        return Collections.unmodifiableList(sepakBolaTekniks);
     }
 
-    private void loadSoalData() {
-        soalList.add(new Soal("/assets/soccer_dribble.jpg", new String[]{"Dribbling", "Passing", "Heading", "Shooting"}, "Dribbling"));
-        soalList.add(new Soal("/assets/badminton_smash.jpg", new String[]{"Servis", "Smash", "Netting", "Footwork"}, "Smash"));
-        soalList.add(new Soal("/assets/soccer_shoot.jpg", new String[]{"Tackle", "Goal", "Shooting", "Goalkeeper"}, "Shooting"));
-        soalList.add(new Soal("/assets/badminton_service.jpg", new String[]{"Servis", "Netting", "Smash", "Drop shot"}, "Servis"));
-        soalList.add(new Soal("/assets/soccer_heading.jpg", new String[]{"Passing", "Dribbling", "Heading", "Tackle"}, "Heading"));
-        soalList.add(new Soal("/assets/badminton_netting.jpg", new String[]{"Lob", "Smash", "Netting", "Servis"}, "Netting"));
+    public List<Teknik> getBadmintonTekniks() {
+        return Collections.unmodifiableList(badmintonTekniks);
     }
 
-    private void loadSoalMencocokkanData() {
-        // Set 1
-        Map<String, String> set1 = new HashMap<>();
-        set1.put("/assets/soccer_dribble.jpg", "Dribbling");
-        set1.put("/assets/badminton_smash.jpg", "Smash");
-        set1.put("/assets/soccer_heading.jpg", "Heading");
-        set1.put("/assets/badminton_service.jpg", "Servis");
-        soalMencocokkanList.add(new SoalMencocokkan(set1));
-
-        // Set 2
-        Map<String, String> set2 = new HashMap<>();
-        set2.put("/assets/soccer_shoot.jpg", "Shooting");
-        set2.put("/assets/badminton_netting.jpg", "Netting");
-        set2.put("/assets/soccer_tackle.jpg", "Tackle");
-        set2.put("/assets/soccer_goalkeeper.jpg", "Goalkeeper");
-        soalMencocokkanList.add(new SoalMencocokkan(set2));
-    }
-
-    public List<Soal> getShuffledSoalList() {
-        List<Soal> shuffledList = new ArrayList<>(soalList);
-        Collections.shuffle(shuffledList);
-        return shuffledList;
-    }
-
-    public List<SoalMencocokkan> getSoalMencocokkanList() {
-        return soalMencocokkanList;
-    }
-
-    public List<Teknik> getTeknikList(String olahraga) {
-        return dataMateri.getOrDefault(olahraga, new ArrayList<>());
+    public List<Soal> getTebakGambarSoal() {
+        return Collections.unmodifiableList(tebakGambarSoal);
     }
 }

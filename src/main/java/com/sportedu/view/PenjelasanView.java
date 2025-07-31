@@ -1,63 +1,109 @@
 package com.sportedu.view;
 
 import com.sportedu.model.Teknik;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionListener;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
-public class PenjelasanView extends JPanel {
-    private final JLabel titleLabel;
-    private final JLabel gifLabel;
-    private final JTextArea descriptionArea;
-    private final JButton backButton;
-    private String currentSport;
+/**
+ * View untuk menampilkan penjelasan detail tentang teknik olahraga
+ * Sesuai dengan desain "3.1.1 Pengertian.png"
+ */
+public class PenjelasanView {
+
+    private final BorderPane view;
+    private final Button kembaliButton;
+    private final Button nextButton;
+    private final Label titleLabel;
+    private final Label descriptionLabel;
+    private final ImageView teknikImageView;
 
     public PenjelasanView() {
-        setLayout(new BorderLayout(10, 10));
-        setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        view = new BorderPane();
+        view.getStyleClass().add("explanation-container");
+        view.setPadding(new Insets(50));
 
-        titleLabel = new JLabel("Nama Teknik", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        add(titleLabel, BorderLayout.NORTH);
+        // Header dengan judul
+        titleLabel = new Label();
+        titleLabel.getStyleClass().add("page-title");
+        titleLabel.setAlignment(Pos.CENTER);
 
-        JPanel contentPanel = new JPanel(new GridLayout(1, 2, 15, 15));
-        gifLabel = new JLabel();
-        gifLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        contentPanel.add(gifLabel);
+        // Konten utama dengan background putih
+        VBox contentBox = new VBox(40);
+        contentBox.setAlignment(Pos.CENTER);
+        contentBox.setPadding(new Insets(50));
+        contentBox.getStyleClass().add("content-background");
 
-        descriptionArea = new JTextArea("Deskripsi akan muncul di sini.");
-        descriptionArea.setFont(new Font("Arial", Font.PLAIN, 16));
-        descriptionArea.setWrapStyleWord(true);
-        descriptionArea.setLineWrap(true);
-        descriptionArea.setEditable(false);
-        descriptionArea.setOpaque(false);
-        JScrollPane scrollPane = new JScrollPane(descriptionArea);
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        contentPanel.add(scrollPane);
+        // Container untuk gambar
+        teknikImageView = new ImageView();
+        teknikImageView.setFitWidth(450);
+        teknikImageView.setFitHeight(350);
+        teknikImageView.setPreserveRatio(true);
+        teknikImageView.getStyleClass().add("technique-image");
 
-        add(contentPanel, BorderLayout.CENTER);
+        // Container untuk deskripsi
+        descriptionLabel = new Label();
+        descriptionLabel.getStyleClass().add("explanation-text");
+        descriptionLabel.setWrapText(true);
+        descriptionLabel.setMaxWidth(600);
+        descriptionLabel.setAlignment(Pos.CENTER);
 
-        backButton = new JButton("Kembali");
-        add(backButton, BorderLayout.SOUTH);
+        contentBox.getChildren().addAll(teknikImageView, descriptionLabel);
+
+        // Tombol navigasi
+        HBox buttonBox = new HBox(30);
+        buttonBox.setAlignment(Pos.CENTER);
+
+        kembaliButton = UIFactory.createNavButton("/images/Back.png", 120, 50);
+        nextButton = UIFactory.createNavButton("/images/Next.png", 120, 50);
+
+        buttonBox.getChildren().addAll(kembaliButton, nextButton);
+
+        view.setTop(titleLabel);
+        view.setCenter(contentBox);
+        view.setBottom(buttonBox);
+
+        BorderPane.setAlignment(titleLabel, Pos.CENTER);
+        BorderPane.setAlignment(buttonBox, Pos.CENTER);
+        BorderPane.setMargin(titleLabel, new Insets(0, 0, 30, 0));
+        BorderPane.setMargin(buttonBox, new Insets(30, 0, 0, 0));
     }
 
-    public void setTeknik(String sport, Teknik teknik) {
-        this.currentSport = sport;
-        titleLabel.setText(teknik.getNama());
-        descriptionArea.setText(teknik.getDeskripsi());
+    public void displayTeknik(Teknik teknik) {
+        titleLabel.setText("Teknik " + teknik.getNama());
+        descriptionLabel.setText(teknik.getDeskripsi());
+
         try {
-            ImageIcon icon = new ImageIcon(getClass().getResource(teknik.getGifPath()));
-            gifLabel.setIcon(icon);
+            Image image = new Image(getClass().getResourceAsStream(teknik.getImagePath()));
+            if (!image.isError()) {
+                teknikImageView.setImage(image);
+            } else {
+                // Fallback jika gambar tidak ditemukan
+                teknikImageView.setImage(null);
+                System.err.println("Cannot load image: " + teknik.getImagePath());
+            }
         } catch (Exception e) {
-            gifLabel.setIcon(null);
-            gifLabel.setText("Animasi tidak ditemukan");
+            System.err.println("Error loading image for " + teknik.getNama() + ": " + e.getMessage());
+            teknikImageView.setImage(null);
         }
-        descriptionArea.setCaretPosition(0);
     }
 
-    public String getCurrentSport() {
-        return currentSport;
+    public Parent getView() {
+        return view;
     }
 
-    public void addBackListener(ActionListener listener) { backButton.addActionListener(listener); }
+    public Button getKembaliButton() {
+        return kembaliButton;
+    }
+
+    public Button getNextButton() {
+        return nextButton;
+    }
 }
