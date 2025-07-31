@@ -50,12 +50,14 @@ public class MainPresenter {
             setupNavbarAttempt(1);
 
             // Backup setup dengan delay
-            javafx.animation.PauseTransition delay1 = new javafx.animation.PauseTransition(javafx.util.Duration.millis(500));
+            javafx.animation.PauseTransition delay1 = new javafx.animation.PauseTransition(
+                    javafx.util.Duration.millis(500));
             delay1.setOnFinished(e -> setupNavbarAttempt(2));
             delay1.play();
 
             // Triple backup setup
-            javafx.animation.PauseTransition delay2 = new javafx.animation.PauseTransition(javafx.util.Duration.millis(1000));
+            javafx.animation.PauseTransition delay2 = new javafx.animation.PauseTransition(
+                    javafx.util.Duration.millis(1000));
             delay2.setOnFinished(e -> setupNavbarAttempt(3));
             delay2.play();
 
@@ -142,7 +144,8 @@ public class MainPresenter {
     private void setupUniversalNavbar() {
         System.out.println("=== SETUP UNIVERSAL NAVBAR ===");
 
-        // Navbar sebagai tombol navigasi universal - tidak peduli halaman apa yang sedang aktif
+        // Navbar sebagai tombol navigasi universal - tidak peduli halaman apa yang
+        // sedang aktif
         if (mainView.navHomeButton != null) {
             System.out.println("✓ navHomeButton - setup for universal navigation");
             mainView.navHomeButton.setOnAction(e -> {
@@ -273,8 +276,12 @@ public class MainPresenter {
         PenjelasanView penjelasanView = new PenjelasanView();
         penjelasanView.displayTeknik(teknik);
 
-        penjelasanView.getKembaliButton().setOnAction(e -> showTeknikPage(olahraga));
-        penjelasanView.getNextButton().setOnAction(e -> showAnimasiPage(teknik, olahraga));
+        // Tombol kembali ke daftar teknik
+        penjelasanView.getBackToTeknikButton().setOnAction(e -> showTeknikPage(olahraga));
+
+        // Tombol navigasi ke animasi
+        penjelasanView.getToAnimasiPrevButton().setOnAction(e -> showAnimasiPage(teknik, olahraga));
+        penjelasanView.getToAnimasiNextButton().setOnAction(e -> showAnimasiPage(teknik, olahraga));
 
         mainView.setView(penjelasanView.getView());
     }
@@ -283,7 +290,9 @@ public class MainPresenter {
         AnimasiView animasiView = new AnimasiView();
         animasiView.displayAnimasi(teknik);
 
-        animasiView.getKembaliButton().setOnAction(e -> showTeknikPage(olahraga));
+        // Kedua tombol kembali ke penjelasan
+        animasiView.getToPenjelasanPrevButton().setOnAction(e -> showPenjelasanPage(teknik, olahraga));
+        animasiView.getToPenjelasanNextButton().setOnAction(e -> showPenjelasanPage(teknik, olahraga));
 
         mainView.setView(animasiView.getView());
     }
@@ -359,31 +368,28 @@ public class MainPresenter {
         switch (round) {
             case 1:
                 imagePaths = Arrays.asList(
-                    "/images/soccer_dribble.jpg",
-                    "/images/soccer_shoot.jpg",
-                    "/images/soccer_goal.jpg",
-                    "/images/soccer_heading.jpg"
-                );
+                        "/images/soccer_dribble.jpg",
+                        "/images/soccer_shoot.jpg",
+                        "/images/soccer_goal.jpg",
+                        "/images/soccer_heading.jpg");
                 names = Arrays.asList("Dribbling", "Shooting", "Goal Keeping", "Heading");
                 ids = Arrays.asList("dribble", "shoot", "goal", "heading");
                 break;
             case 2:
                 imagePaths = Arrays.asList(
-                    "/images/badminton_service.jpg",
-                    "/images/badminton_smash.jpg",
-                    "/images/badminton_netting.jpg",
-                    "/images/soccer_tackle.jpg"
-                );
+                        "/images/badminton_service.jpg",
+                        "/images/badminton_smash.jpg",
+                        "/images/badminton_netting.jpg",
+                        "/images/soccer_tackle.jpg");
                 names = Arrays.asList("Service", "Smash", "Netting", "Tackle");
                 ids = Arrays.asList("service", "smash", "netting", "tackle");
                 break;
             default:
                 imagePaths = Arrays.asList(
-                    "/images/soccer_goalkeeper.jpg",
-                    "/images/soccer_dribble.jpg",
-                    "/images/badminton_service.jpg",
-                    "/images/badminton_smash.jpg"
-                );
+                        "/images/soccer_goalkeeper.jpg",
+                        "/images/soccer_dribble.jpg",
+                        "/images/badminton_service.jpg",
+                        "/images/badminton_smash.jpg");
                 names = Arrays.asList("Goalkeeping", "Dribble", "Badminton Service", "Badminton Smash");
                 ids = Arrays.asList("goalkeeper", "dribble", "service", "smash");
                 break;
@@ -447,7 +453,8 @@ public class MainPresenter {
      * Menampilkan halaman petunjuk
      */
     private void showInstructionsPage() {
-        // Implementasi akan dibuat nanti - untuk sekarang fokus ke halaman quiz utama dulu
+        // Implementasi akan dibuat nanti - untuk sekarang fokus ke halaman quiz utama
+        // dulu
         System.out.println("Tombol Petunjuk ditekan - akan mengarah ke halaman petunjuk");
         // Placeholder - akan dibuat halaman petunjuk
     }
