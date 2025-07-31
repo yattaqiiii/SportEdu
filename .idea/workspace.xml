@@ -5,9 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c83b5bd2-c0e8-4943-be14-c818ccacdbaf" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/view/HasilMencocokkanGambarView.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/view/HasilTebakGambarView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/presenter/MainPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/presenter/MainPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/view/MatchingQuizFXView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/view/MatchingQuizFXView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/view/QuizView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/view/QuizView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/presenter/MainPresenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/presenter/MainPresenter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/MatchingQuizFXView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/MatchingQuizFXView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/QuizView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/QuizView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

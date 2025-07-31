@@ -21,7 +21,14 @@ public class Main extends Application {
         new MainPresenter(mainView, model); // Presenter utama mengontrol alur
 
         Scene scene = new Scene(mainView.getRoot(), 1024, 768);
-        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
+
+        // Add stylesheet with error handling
+        try {
+            String stylesheet = getClass().getResource("/styles.css").toExternalForm();
+            scene.getStylesheets().add(stylesheet);
+        } catch (Exception e) {
+            System.err.println("Could not load stylesheet: " + e.getMessage());
+        }
 
         primaryStage.setTitle("SportEdu - Media Pembelajaran Olahraga");
         primaryStage.setScene(scene);

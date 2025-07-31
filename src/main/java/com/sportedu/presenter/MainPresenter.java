@@ -226,13 +226,34 @@ public class MainPresenter {
     }
 
     private void attachQuizModePageEvents() {
+        System.out.println("🎯 ATTACH QUIZ MODE PAGE EVENTS");
+
         // Event handlers untuk tombol Mulai dan Petunjuk
         if (mainView.mulaiButton != null) {
-            mainView.mulaiButton.setOnAction(e -> showQuizModeSelectionPage());
+            System.out.println("✅ mulaiButton found - setting up action");
+            // Clear any existing handler first
+            mainView.mulaiButton.setOnAction(null);
+            // Set new handler
+            mainView.mulaiButton.setOnAction(e -> {
+                System.out.println("🚀 MULAI BUTTON CLICKED!");
+                showQuizModeSelectionPage();
+            });
+        } else {
+            System.out.println("❌ mulaiButton is NULL!");
         }
+
         if (mainView.petunjukButton != null) {
-            mainView.petunjukButton.setOnAction(e -> showInstructionsPage());
+            System.out.println("✅ petunjukButton found - setting up action");
+            mainView.petunjukButton.setOnAction(null);
+            mainView.petunjukButton.setOnAction(e -> {
+                System.out.println("📖 PETUNJUK BUTTON CLICKED!");
+                showInstructionsPage();
+            });
+        } else {
+            System.out.println("❌ petunjukButton is NULL!");
         }
+
+        System.out.println("🎯 QUIZ MODE PAGE EVENTS ATTACHED");
     }
 
     // Method navigasi sederhana untuk kompatibilitas
@@ -307,6 +328,9 @@ public class MainPresenter {
         QuizView quizView = new QuizView();
         quizView.displaySoal(soal);
 
+        // Setup navbar di QuizView dengan BRUTAL FORCE
+        setupNavbarForQuizView(quizView);
+
         for (int i = 0; i < quizView.pilihanButtons.length; i++) {
             final int jawabanPilihan = i;
             quizView.pilihanButtons[i].setOnAction(e -> {
@@ -318,6 +342,45 @@ public class MainPresenter {
         mainView.setView(quizView.getView());
     }
 
+    /**
+     * Setup navbar untuk QuizView dengan BRUTAL FORCE
+     */
+    private void setupNavbarForQuizView(QuizView quizView) {
+        System.out.println("🎯 SETUP NAVBAR FOR QUIZ VIEW");
+
+        // Delay setup untuk memastikan UI QuizView sudah ready
+        javafx.application.Platform.runLater(() -> {
+            javafx.application.Platform.runLater(() -> {
+                if (quizView.navHomeButton != null) {
+                    System.out.println("✅ QuizView navHomeButton found");
+                    quizView.navHomeButton.setOnAction(null);
+                    quizView.navHomeButton.setOnAction(event -> {
+                        System.out.println("🏠 QUIZ VIEW NAVBAR HOME CLICKED!");
+                        brutalNavigateToHome();
+                    });
+                }
+
+                if (quizView.navMateriButton != null) {
+                    System.out.println("✅ QuizView navMateriButton found");
+                    quizView.navMateriButton.setOnAction(null);
+                    quizView.navMateriButton.setOnAction(event -> {
+                        System.out.println("📚 QUIZ VIEW NAVBAR MATERI CLICKED!");
+                        brutalNavigateToMateri();
+                    });
+                }
+
+                if (quizView.navQuizButton != null) {
+                    System.out.println("✅ QuizView navQuizButton found");
+                    quizView.navQuizButton.setOnAction(null);
+                    quizView.navQuizButton.setOnAction(event -> {
+                        System.out.println("🎮 QUIZ VIEW NAVBAR QUIZ CLICKED!");
+                        brutalNavigateToQuiz();
+                    });
+                }
+            });
+        });
+    }
+
     private void prosesJawaban(int jawabanPilihan, int jawabanBenar) {
         if (jawabanPilihan == jawabanBenar) {
             skorSaatIni++;
@@ -327,13 +390,46 @@ public class MainPresenter {
     }
 
     private void tampilkanHasilQuiz() {
-        HasilQuizView hasilView = new HasilQuizView();
-        hasilView.displayHasil(skorSaatIni, daftarSoalKuis.size());
+        // JANGAN ganti halaman! Tampilkan overlay di atas halaman quiz-pilih mode yang sudah ada
 
-        hasilView.getKembaliButton().setOnAction(e -> showLandingPage());
-        hasilView.getMainLagiButton().setOnAction(e -> startTebakGambarQuiz());
+        // Kembali ke quiz mode page dulu (jika belum ada)
+        mainView.showQuizModeSelectionPage();
+        attachQuizModeSelectionPageEvents();
 
-        mainView.setView(hasilView.getView());
+        // Delay sedikit untuk memastikan halaman quiz mode sudah ready
+        javafx.application.Platform.runLater(() -> {
+            // Buat overlay hasil di atas halaman quiz mode
+            HasilTebakGambarView hasilOverlay = new HasilTebakGambarView();
+            hasilOverlay.displayHasil(skorSaatIni, daftarSoalKuis.size());
+
+            // Setup button actions - tombol kembali ke quiz mode selection page
+            hasilOverlay.getKembaliButton().setOnAction(e -> {
+                // Tutup overlay dan kembali ke quiz mode selection page
+                showQuizModeSelectionPage();
+            });
+
+            hasilOverlay.getMainLagiButton().setOnAction(e -> {
+                // Tutup overlay dan mulai game lagi
+                startTebakGambarQuiz();
+            });
+
+            // Setup navbar actions untuk HasilTebakGambarView
+            if (hasilOverlay.getNavHomeButton() != null) {
+                hasilOverlay.getNavHomeButton().setOnAction(e -> brutalNavigateToHome());
+            }
+            if (hasilOverlay.getNavMateriButton() != null) {
+                hasilOverlay.getNavMateriButton().setOnAction(e -> brutalNavigateToMateri());
+            }
+            if (hasilOverlay.getNavQuizButton() != null) {
+                hasilOverlay.getNavQuizButton().setOnAction(e -> brutalNavigateToQuiz());
+            }
+
+            // HasilTebakGambarView sekarang adalah popup overlay kecil, tidak ada navbar
+            // Jadi tidak perlu setup navbar actions
+
+            // TAMPILKAN OVERLAY DI ATAS HALAMAN YANG SUDAH ADA
+            mainView.setView(hasilOverlay.getView());
+        });
     }
 
     // --- Bagian Kuis Mencocokkan Gambar ---
@@ -403,6 +499,22 @@ public class MainPresenter {
         matchingView.setOnNextRound(() -> {
             currentMatchingRound++;
             tampilkanMencocokkanGambarRound(currentMatchingRound);
+        });
+
+        // Tambahkan callback untuk onGameComplete yang hilang
+        matchingView.setOnGameComplete((correctAnswers, totalQuestions) -> {
+            // Periksa nilai khusus untuk navigasi navbar
+            if (correctAnswers == 0 && totalQuestions == 0) {
+                // Home button clicked
+                showLandingPage();
+            } else if (correctAnswers == -1 && totalQuestions == -1) {
+                // Materi button clicked
+                showMateriPage();
+            } else {
+                // Normal game completion - kembali ke quiz mode (BUKAN ke hasil terpisah)
+                // Karena MatchingQuizFXView sudah menampilkan hasil overlay sendiri
+                showQuizModeSelectionPage();
+            }
         });
 
         matchingView.getKembaliButton().setOnAction(e -> showQuizModePage());
