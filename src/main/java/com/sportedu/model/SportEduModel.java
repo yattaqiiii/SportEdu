@@ -17,17 +17,17 @@ public class SportEduModel {
     public SportEduModel() {
         // Data untuk materi Sepak Bola - 4 teknik sesuai permintaan
         sepakBolaTekniks = new ArrayList<>();
-        sepakBolaTekniks.add(new Teknik("Passing", "Mengoper bola kepada rekan satu tim dengan akurat.", "/images/soccer_passing.jpg", "/images/gif1.gif"));
-        sepakBolaTekniks.add(new Teknik("Dribbling", "Menggiring bola sambil bergerak menggunakan kaki.", "/images/soccer_dribble.jpg", "/images/gif2.gif"));
-        sepakBolaTekniks.add(new Teknik("Shooting", "Menendang bola ke arah gawang untuk mencetak gol.", "/images/soccer_shoot.jpg", "/images/gif3.gif"));
-        sepakBolaTekniks.add(new Teknik("Heading", "Menyundul bola menggunakan kepala untuk mengoper atau mencetak gol.", "/images/soccer_heading.jpg", "/images/gif4.gif"));
+        sepakBolaTekniks.add(new Teknik("Passing", "Mengoper bola kepada rekan satu tim dengan akurat.", "/images/soccer_passing.jpg", "/images/passing.gif"));
+        sepakBolaTekniks.add(new Teknik("Dribbling", "Menggiring bola sambil bergerak menggunakan kaki.", "/images/soccer_dribble.jpg", "/images/dribbling.gif"));
+        sepakBolaTekniks.add(new Teknik("Shooting", "Menendang bola ke arah gawang untuk mencetak gol.", "/images/soccer_shoot.jpg", "/images/shooting.gif"));
+        sepakBolaTekniks.add(new Teknik("Heading", "Menyundul bola menggunakan kepala untuk mengoper atau mencetak gol.", "/images/soccer_heading.jpg", "/images/heading.gif"));
 
         // Data untuk materi Badminton - 4 teknik sesuai permintaan
         badmintonTekniks = new ArrayList<>();
-        badmintonTekniks.add(new Teknik("Servis", "Pukulan awal untuk memulai permainan badminton.", "/images/badminton_service.jpg", "/images/gif5.gif"));
-        badmintonTekniks.add(new Teknik("Smash", "Pukulan keras dan menukik ke area lawan untuk mencetak poin.", "/images/badminton_smash.jpg", "/images/gif6.gif"));
-        badmintonTekniks.add(new Teknik("Footwork", "Gerakan kaki untuk berpindah posisi dengan cepat dan efisien.", "/images/badminton_footwork.jpg", "/images/gif7.gif"));
-        badmintonTekniks.add(new Teknik("Netting", "Pukulan halus di dekat net agar shuttlecock jatuh tipis di area lawan.", "/images/badminton_netting.jpg", "/images/gif8.gif"));
+        badmintonTekniks.add(new Teknik("Servis", "Pukulan awal untuk memulai permainan badminton.", "/images/badminton_service.jpg", "/images/servis.gif"));
+        badmintonTekniks.add(new Teknik("Smash", "Pukulan keras dan menukik ke area lawan untuk mencetak poin.", "/images/badminton_smash.jpg", "/images/smash.gif"));
+        badmintonTekniks.add(new Teknik("Footwork", "Gerakan kaki untuk berpindah posisi dengan cepat dan efisien.", "/images/badminton_footwork.jpg", "/images/footwork.gif"));
+        badmintonTekniks.add(new Teknik("Netting", "Pukulan halus di dekat net agar shuttlecock jatuh tipis di area lawan.", "/images/badminton_netting.jpg", "/images/netting.gif"));
 
         // Data untuk Kuis Tebak Gambar - 10 soal
         tebakGambarSoal = new ArrayList<>();

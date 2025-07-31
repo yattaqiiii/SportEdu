@@ -18,28 +18,107 @@ import javafx.scene.layout.VBox;
  */
 public class PenjelasanView {
 
-    private final BorderPane view;
-    private final Button kembaliButton;
-    private final Button nextButton;
-    private final Label titleLabel;
-    private final Label descriptionLabel;
-    private final ImageView teknikImageView;
+    private BorderPane view;
+    private BorderPane headerPane; // Container untuk header (judul dan tombol back)
+    private Button backToTeknikButton; // Tombol kembali ke pilih teknik
+    private Button kembaliButton; // Tombol kembali ke animasi
+    private Button nextButton; // Tombol next ke animasi
+    private Button volumeButton;
+    private Label titleLabel;
+    private Label descriptionLabel;
+    private ImageView teknikImageView;
+
+    private boolean isSoundOn = false;
+
+    private HBox createNavbar() {
+        HBox navbar = new HBox();
+        navbar.setPrefHeight(80);
+        navbar.setPrefWidth(1280);
+        navbar.setPadding(new Insets(15, 40, 15, 40));
+        navbar.setAlignment(Pos.CENTER_LEFT);
+        navbar.setStyle("-fx-background-color: #516BB0;");
+
+        try {
+            ImageView logo = new ImageView(new Image(getClass().getResourceAsStream("/images/logo.png")));
+            logo.setFitHeight(50);
+            logo.setPreserveRatio(true);
+
+            HBox logoContainer = new HBox();
+            logoContainer.setAlignment(Pos.CENTER_LEFT);
+            logoContainer.getChildren().add(logo);
+
+            navbar.getChildren().add(logoContainer);
+        } catch (Exception e) {
+            HBox logoContainer = new HBox();
+            navbar.getChildren().add(logoContainer);
+        }
+
+        HBox spacer = new HBox();
+        HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
+        navbar.getChildren().add(spacer);
+
+        HBox navButtons = new HBox(30);
+        navButtons.setAlignment(Pos.CENTER_RIGHT);
+
+        Button navHomeButton = new Button("Halaman Utama");
+        navHomeButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+        navHomeButton.setOnMouseEntered(e -> navHomeButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navHomeButton.setOnMouseExited(e -> navHomeButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+
+        Button navMateriButton = new Button("Materi");
+        navMateriButton.setStyle(
+                "-fx-background-color: rgba(245, 230, 163, 0.2); -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 600; -fx-border-width: 0; -fx-padding: 8 16; -fx-background-radius: 5;");
+
+        Button navQuizButton = new Button("Quiz");
+        navQuizButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+        navQuizButton.setOnMouseEntered(e -> navQuizButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navQuizButton.setOnMouseExited(e -> navQuizButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+
+        navButtons.getChildren().addAll(navHomeButton, navMateriButton, navQuizButton);
+        navbar.getChildren().add(navButtons);
+
+        return navbar;
+    }
 
     public PenjelasanView() {
         view = new BorderPane();
         view.getStyleClass().add("explanation-container");
-        view.setPadding(new Insets(50));
+        view.setPrefSize(1280, 832);
 
-        // Header dengan judul
+        // Header dengan judul dan tombol kembali
+        headerPane = new BorderPane();
+
+        // Tombol back di kiri
+        backToTeknikButton = UIFactory.createNavButton("/images/Back.png", 50, 50);
+        backToTeknikButton.setId("backToTeknik");
+        headerPane.setLeft(backToTeknikButton);
+
+        // Title di tengah menggunakan ImageView
         titleLabel = new Label();
-        titleLabel.getStyleClass().add("page-title");
-        titleLabel.setAlignment(Pos.CENTER);
+        ImageView titleImageView = new ImageView();
+        titleImageView.setFitHeight(40);
+        titleImageView.setPreserveRatio(true);
+        BorderPane.setAlignment(titleImageView, Pos.CENTER);
+        headerPane.setCenter(titleImageView);
+
+        // Dummy node di kanan untuk balance
+        HBox dummyRight = new HBox();
+        dummyRight.setMinWidth(50);
+        headerPane.setRight(dummyRight);
 
         // Konten utama dengan background putih
-        VBox contentBox = new VBox(40);
+        VBox contentBox = new VBox(20);
         contentBox.setAlignment(Pos.CENTER);
-        contentBox.setPadding(new Insets(50));
+        contentBox.setPadding(new Insets(20));
         contentBox.getStyleClass().add("content-background");
+        contentBox.setMaxWidth(800); // Kurangi lebar maksimal
+        contentBox.setMinHeight(500); // Tambah minimum height
 
         // Container untuk gambar
         teknikImageView = new ImageView();
@@ -63,29 +142,92 @@ public class PenjelasanView {
 
         kembaliButton = UIFactory.createNavButton("/images/Back.png", 120, 50);
         nextButton = UIFactory.createNavButton("/images/Next.png", 120, 50);
+        volumeButton = UIFactory.createNavButton("/images/volume off.png", 80, 80);
+        volumeButton.getStyleClass().add("volume-button");
+        volumeButton.setOnAction(e -> toggleSound());
 
-        buttonBox.getChildren().addAll(kembaliButton, nextButton);
+        buttonBox.getChildren().addAll(kembaliButton, volumeButton, nextButton);
 
-        view.setTop(titleLabel);
-        view.setCenter(contentBox);
-        view.setBottom(buttonBox);
+        try {
+            // Background dengan dot pattern
+            ImageView dotBackground = new ImageView(
+                    new Image(getClass().getResourceAsStream("/images/dot background.png")));
+            dotBackground.setFitWidth(1280);
+            dotBackground.setFitHeight(832);
+            dotBackground.setPreserveRatio(false);
 
-        BorderPane.setAlignment(titleLabel, Pos.CENTER);
-        BorderPane.setAlignment(buttonBox, Pos.CENTER);
-        BorderPane.setMargin(titleLabel, new Insets(0, 0, 30, 0));
-        BorderPane.setMargin(buttonBox, new Insets(30, 0, 0, 0));
+            // Overlay container - tanpa spacing
+            VBox overlayContainer = new VBox(0);
+            overlayContainer.setPrefSize(1280, 832);
+            overlayContainer.setStyle("-fx-background-color: transparent;");
+
+            // Navbar di atas
+            HBox navbar = createNavbar();
+
+            // Content area - hilangkan semua padding
+            VBox contentArea = new VBox();
+            contentArea.setAlignment(Pos.TOP_CENTER);
+            VBox.setVgrow(contentArea, javafx.scene.layout.Priority.ALWAYS);
+            contentArea.setSpacing(20);
+
+            // Tambahkan komponen ke content area dengan spacing yang tepat
+            contentArea.getChildren().addAll(headerPane, contentBox, buttonBox);
+            VBox.setMargin(contentBox, new Insets(20, 0, 20, 0));
+
+            // Susun layout dengan overlay
+            overlayContainer.getChildren().addAll(navbar, contentArea);
+
+            // Stack background dan overlay - pastikan tidak ada spacing
+            javafx.scene.layout.StackPane stackPane = new javafx.scene.layout.StackPane();
+            stackPane.setAlignment(Pos.TOP_CENTER);
+            stackPane.getChildren().addAll(dotBackground, overlayContainer);
+
+            view.setCenter(stackPane);
+        } catch (Exception e) {
+            System.err.println("Error loading background: " + e.getMessage());
+            // Fallback jika background tidak bisa dimuat
+            VBox fallbackContainer = new VBox();
+            fallbackContainer.setPrefSize(1280, 832);
+
+            HBox navbar = createNavbar();
+
+            VBox contentArea = new VBox(40);
+            contentArea.setAlignment(Pos.CENTER);
+            contentArea.setPadding(new Insets(80, 100, 80, 100));
+            contentArea.getChildren().addAll(headerPane, contentBox, buttonBox);
+
+            fallbackContainer.getChildren().addAll(navbar, contentArea);
+            view.setCenter(fallbackContainer);
+        }
     }
 
     public void displayTeknik(Teknik teknik) {
-        titleLabel.setText("Teknik " + teknik.getNama());
+        // Set title image berdasarkan nama teknik
+        String titleImagePath = "/images/pengertian_" + teknik.getNama().toLowerCase() + ".png";
+        try {
+            Image titleImage = new Image(getClass().getResourceAsStream(titleImagePath));
+            if (!titleImage.isError()) {
+                ((ImageView) headerPane.getCenter()).setImage(titleImage);
+            } else {
+                System.err.println("Cannot load title image: " + titleImagePath);
+                titleLabel.setText("Teknik " + teknik.getNama()); // fallback ke text
+                headerPane.setCenter(titleLabel);
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading title image: " + e.getMessage());
+            titleLabel.setText("Teknik " + teknik.getNama()); // fallback ke text
+            headerPane.setCenter(titleLabel);
+        }
+
+        // Set description
         descriptionLabel.setText(teknik.getDeskripsi());
 
+        // Set main image
         try {
             Image image = new Image(getClass().getResourceAsStream(teknik.getImagePath()));
             if (!image.isError()) {
                 teknikImageView.setImage(image);
             } else {
-                // Fallback jika gambar tidak ditemukan
                 teknikImageView.setImage(null);
                 System.err.println("Cannot load image: " + teknik.getImagePath());
             }
@@ -99,11 +241,54 @@ public class PenjelasanView {
         return view;
     }
 
-    public Button getKembaliButton() {
+    public Button getBackToTeknikButton() {
+        return backToTeknikButton;
+    }
+
+    public Button getToAnimasiPrevButton() {
         return kembaliButton;
     }
 
-    public Button getNextButton() {
+    public Button getToAnimasiNextButton() {
         return nextButton;
+    }
+
+    public Button getVolumeButton() {
+        return volumeButton;
+    }
+
+    public boolean isSoundOn() {
+        return isSoundOn;
+    }
+
+    private void toggleSound() {
+        isSoundOn = !isSoundOn;
+
+        try {
+            if (isSoundOn) {
+                // Update tombol ke volume on
+                Image volumeOnImage = new Image(getClass().getResourceAsStream("/images/volume on.png"));
+                ImageView volumeOnView = new ImageView(volumeOnImage);
+                volumeOnView.setFitWidth(50);
+                volumeOnView.setFitHeight(50);
+                volumeOnView.setPreserveRatio(true);
+                volumeButton.setGraphic(volumeOnView);
+
+                // TODO: Implementasi text-to-speech nanti
+                System.out.println("Sound ON - Text-to-speech akan diimplementasikan nanti");
+            } else {
+                // Update tombol ke volume off
+                Image volumeOffImage = new Image(getClass().getResourceAsStream("/images/volume off.png"));
+                ImageView volumeOffView = new ImageView(volumeOffImage);
+                volumeOffView.setFitWidth(50);
+                volumeOffView.setFitHeight(50);
+                volumeOffView.setPreserveRatio(true);
+                volumeButton.setGraphic(volumeOffView);
+
+                System.out.println("Sound OFF");
+            }
+        } catch (Exception e) {
+            System.err.println("Error updating volume button: " + e.getMessage());
+        }
     }
 }

@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -44,15 +45,16 @@ public class MainView {
     public Button mulaiButton;
     public Button petunjukButton;
 
-
     public MainView(Stage stage) {
         this.stage = stage;
         this.root = new BorderPane();
 
-        // Set ukuran fix 1280x832 sesuai permintaan
-        stage.setWidth(1280);
-        stage.setHeight(832);
-        stage.setResizable(false);
+        // Set ukuran minimum window dan biarkan bisa di-resize
+        stage.setMinWidth(800);
+        stage.setMinHeight(600);
+        stage.setWidth(800);
+        stage.setHeight(600);
+        stage.setResizable(true);
 
         showLandingPage(); // Tampilan awal
     }
@@ -65,7 +67,17 @@ public class MainView {
      * Metode untuk mengganti konten utama di tengah BorderPane.
      */
     public void setView(Node view) {
-        root.setCenter(view);
+        // Buat ScrollPane untuk mengakomodasi konten yang lebih besar
+        ScrollPane scrollPane = new ScrollPane(view);
+        scrollPane.setFitToWidth(true); // Konten akan menyesuaikan lebar window
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Horizontal scroll jika diperlukan
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED); // Vertical scroll jika diperlukan
+        scrollPane.setPannable(true); // Bisa di-pan dengan mouse
+
+        // Style ScrollPane agar sesuai dengan desain
+        scrollPane.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+
+        root.setCenter(scrollPane);
     }
 
     /**
@@ -106,19 +118,28 @@ public class MainView {
         navButtons.setAlignment(Pos.CENTER_RIGHT);
 
         navHomeButton = new Button("Halaman Utama");
-        navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
-        navHomeButton.setOnMouseEntered(e -> navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
-        navHomeButton.setOnMouseExited(e -> navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navHomeButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+        navHomeButton.setOnMouseEntered(e -> navHomeButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navHomeButton.setOnMouseExited(e -> navHomeButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
 
         navMateriButton = new Button("Materi");
-        navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
-        navMateriButton.setOnMouseEntered(e -> navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
-        navMateriButton.setOnMouseExited(e -> navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navMateriButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+        navMateriButton.setOnMouseEntered(e -> navMateriButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navMateriButton.setOnMouseExited(e -> navMateriButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
 
         navQuizButton = new Button("Quiz");
-        navQuizButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
-        navQuizButton.setOnMouseEntered(e -> navQuizButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
-        navQuizButton.setOnMouseExited(e -> navQuizButton.setStyle("-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navQuizButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+        navQuizButton.setOnMouseEntered(e -> navQuizButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
+        navQuizButton.setOnMouseExited(e -> navQuizButton.setStyle(
+                "-fx-background-color: transparent; -fx-text-fill: white; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;"));
 
         navButtons.getChildren().addAll(navHomeButton, navMateriButton, navQuizButton);
         navbar.getChildren().add(navButtons);
@@ -138,7 +159,8 @@ public class MainView {
             navHomeButton.setStyle(normalStyle);
             navHomeButton.setOnMouseEntered(e -> {
                 if (!"home".equals(activePage)) {
-                    navHomeButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+                    navHomeButton.setStyle(
+                            "-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
                 }
             });
             navHomeButton.setOnMouseExited(e -> {
@@ -154,7 +176,8 @@ public class MainView {
             navMateriButton.setStyle(normalStyle);
             navMateriButton.setOnMouseEntered(e -> {
                 if (!"materi".equals(activePage)) {
-                    navMateriButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+                    navMateriButton.setStyle(
+                            "-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
                 }
             });
             navMateriButton.setOnMouseExited(e -> {
@@ -170,7 +193,8 @@ public class MainView {
             navQuizButton.setStyle(normalStyle);
             navQuizButton.setOnMouseEntered(e -> {
                 if (!"quiz".equals(activePage)) {
-                    navQuizButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
+                    navQuizButton.setStyle(
+                            "-fx-background-color: transparent; -fx-text-fill: #F5E6A3; -fx-font-family: 'Poppins', Arial; -fx-font-size: 16px; -fx-font-weight: 500; -fx-border-width: 0; -fx-padding: 8 16;");
                 }
             });
             navQuizButton.setOnMouseExited(e -> {
@@ -185,13 +209,16 @@ public class MainView {
         // Set tombol aktif
         switch (activePage) {
             case "home":
-                if (navHomeButton != null) navHomeButton.setStyle(activeStyle);
+                if (navHomeButton != null)
+                    navHomeButton.setStyle(activeStyle);
                 break;
             case "materi":
-                if (navMateriButton != null) navMateriButton.setStyle(activeStyle);
+                if (navMateriButton != null)
+                    navMateriButton.setStyle(activeStyle);
                 break;
             case "quiz":
-                if (navQuizButton != null) navQuizButton.setStyle(activeStyle);
+                if (navQuizButton != null)
+                    navQuizButton.setStyle(activeStyle);
                 break;
         }
     }
@@ -206,7 +233,8 @@ public class MainView {
 
         // Background dengan dot pattern dari vektor
         try {
-            ImageView dotBackground = new ImageView(new Image(getClass().getResourceAsStream("/images/dot background.png")));
+            ImageView dotBackground = new ImageView(
+                    new Image(getClass().getResourceAsStream("/images/dot background.png")));
             dotBackground.setFitWidth(1280);
             dotBackground.setFitHeight(832);
             dotBackground.setPreserveRatio(false);
@@ -229,7 +257,8 @@ public class MainView {
             VBox contentBox = new VBox(30);
             contentBox.setAlignment(Pos.CENTER);
             contentBox.setPadding(new Insets(50, 60, 50, 60));
-            contentBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);");
+            contentBox.setStyle(
+                    "-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);");
             contentBox.setMaxWidth(800);
 
             // Hero section dengan logo SportEdu sebagai judul
@@ -238,7 +267,8 @@ public class MainView {
 
             // Gunakan gambar SportEdu sebagai judul
             try {
-                ImageView sportEduLogo = new ImageView(new Image(getClass().getResourceAsStream("/images/SportEdu.png")));
+                ImageView sportEduLogo = new ImageView(
+                        new Image(getClass().getResourceAsStream("/images/SportEdu.png")));
                 sportEduLogo.setFitHeight(120);
                 sportEduLogo.setPreserveRatio(true);
                 sportEduLogo.setSmooth(true);
@@ -246,13 +276,15 @@ public class MainView {
             } catch (Exception logoException) {
                 // Fallback jika logo SportEdu tidak ditemukan
                 Label mainTitle = new Label("SportEdu");
-                mainTitle.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
+                mainTitle.setStyle(
+                        "-fx-font-family: 'Poppins', Arial; -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
                 heroSection.getChildren().add(mainTitle);
             }
 
             // Gunakan gambar subtitle sebagai pengganti teks
             try {
-                ImageView subtitleImage = new ImageView(new Image(getClass().getResourceAsStream("/images/Aplikasi Pembelajaran Olahraga Interaktif.png")));
+                ImageView subtitleImage = new ImageView(new Image(
+                        getClass().getResourceAsStream("/images/Aplikasi Pembelajaran Olahraga Interaktif.png")));
                 subtitleImage.setFitHeight(40);
                 subtitleImage.setPreserveRatio(true);
                 subtitleImage.setSmooth(true);
@@ -260,7 +292,8 @@ public class MainView {
             } catch (Exception subtitleException) {
                 // Fallback jika gambar subtitle tidak ditemukan
                 Label subtitle = new Label("Platform pembelajaran olahraga interaktif untuk anak-anak");
-                subtitle.setStyle("-fx-font-family: 'Poppins'; -fx-font-size: 18px; -fx-font-weight: 400; -fx-text-fill: #516BB0; -fx-text-alignment: center;");
+                subtitle.setStyle(
+                        "-fx-font-family: 'Poppins'; -fx-font-size: 18px; -fx-font-weight: 400; -fx-text-fill: #516BB0; -fx-text-alignment: center;");
                 subtitle.setWrapText(true);
                 heroSection.getChildren().add(subtitle);
             }
@@ -304,7 +337,8 @@ public class MainView {
             VBox contentBox = new VBox(30);
             contentBox.setAlignment(Pos.CENTER);
             contentBox.setPadding(new Insets(50, 60, 50, 60));
-            contentBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);");
+            contentBox.setStyle(
+                    "-fx-background-color: rgba(255, 255, 255, 0.9); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);");
             contentBox.setMaxWidth(800);
 
             // Hero section dengan logo SportEdu
@@ -312,27 +346,31 @@ public class MainView {
             heroSection.setAlignment(Pos.CENTER);
 
             try {
-                ImageView sportEduLogo = new ImageView(new Image(getClass().getResourceAsStream("/images/SportEdu.png")));
+                ImageView sportEduLogo = new ImageView(
+                        new Image(getClass().getResourceAsStream("/images/SportEdu.png")));
                 sportEduLogo.setFitHeight(120);
                 sportEduLogo.setPreserveRatio(true);
                 sportEduLogo.setSmooth(true);
                 heroSection.getChildren().add(sportEduLogo);
             } catch (Exception logoException) {
                 Label mainTitle = new Label("SportEdu");
-                mainTitle.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C;");
+                mainTitle.setStyle(
+                        "-fx-font-family: 'Poppins', Arial; -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C;");
                 heroSection.getChildren().add(mainTitle);
             }
 
             // Gunakan gambar subtitle sebagai pengganti teks
             try {
-                ImageView subtitleImage = new ImageView(new Image(getClass().getResourceAsStream("/images/Aplikasi Pembelajaran Olahraga Interaktif.png")));
+                ImageView subtitleImage = new ImageView(new Image(
+                        getClass().getResourceAsStream("/images/Aplikasi Pembelajaran Olahraga Interaktif.png")));
                 subtitleImage.setFitHeight(40);
                 subtitleImage.setPreserveRatio(true);
                 subtitleImage.setSmooth(true);
                 heroSection.getChildren().add(subtitleImage);
             } catch (Exception subtitleException) {
                 Label subtitle = new Label("Platform pembelajaran olahraga interaktif untuk anak-anak");
-                subtitle.setStyle("-fx-font-family: 'Poppins'; -fx-font-size: 18px; -fx-font-weight: 400; -fx-text-fill: #516BB0;");
+                subtitle.setStyle(
+                        "-fx-font-family: 'Poppins'; -fx-font-size: 18px; -fx-font-weight: 400; -fx-text-fill: #516BB0;");
                 subtitle.setWrapText(true);
 
                 heroSection.getChildren().add(subtitle);
@@ -367,7 +405,8 @@ public class MainView {
 
         // Background dengan dot pattern dari vektor
         try {
-            ImageView dotBackground = new ImageView(new Image(getClass().getResourceAsStream("/images/dot background.png")));
+            ImageView dotBackground = new ImageView(
+                    new Image(getClass().getResourceAsStream("/images/dot background.png")));
             dotBackground.setFitWidth(1280);
             dotBackground.setFitHeight(832);
             dotBackground.setPreserveRatio(false);
@@ -383,27 +422,43 @@ public class MainView {
             // Content area utama
             VBox contentArea = new VBox(40);
             contentArea.setAlignment(Pos.CENTER);
-            contentArea.setPadding(new Insets(100, 100, 100, 100));
+            contentArea.setPadding(new Insets(80, 100, 80, 100));
             VBox.setVgrow(contentArea, javafx.scene.layout.Priority.ALWAYS);
 
-            // Judul halaman
-            Label title = new Label("Pilih Materi");
-            title.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
+            // Judul halaman menggunakan gambar
+            try {
+                ImageView titleImage = new ImageView(new Image(getClass().getResourceAsStream("/images/Materi.png")));
+                titleImage.setFitHeight(60);
+                titleImage.setPreserveRatio(true);
+                titleImage.setSmooth(true);
+
+                VBox titleContainer = new VBox(titleImage);
+                titleContainer.setAlignment(Pos.CENTER);
+                titleContainer.setPadding(new Insets(0, 0, 20, 0));
+
+                contentArea.getChildren().add(titleContainer);
+            } catch (Exception titleException) {
+                // Fallback jika gambar tidak ditemukan
+                Label title = new Label("Pilih Materi");
+                title.setStyle(
+                        "-fx-font-family: 'Poppins', Arial; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
+                contentArea.getChildren().add(title);
+            }
 
             // Container untuk kartu olahraga
             HBox pilihanBox = new HBox(60);
             pilihanBox.setAlignment(Pos.CENTER);
 
-            // Gunakan UIFactory untuk kartu olahraga
-            sepakBolaButton = UIFactory.createSportCard("/images/SepakBola.png", 280, 280);
-            badmintonButton = UIFactory.createSportCard("/images/Badminton.png", 280, 280);
+            // Gunakan UIFactory untuk kartu olahraga dengan gambar yang benar
+            sepakBolaButton = UIFactory.createSportCard("/images/SepakBola_butt.png", 280, 280);
+            badmintonButton = UIFactory.createSportCard("/images/Badminton_butt.png", 280, 280);
 
             pilihanBox.getChildren().addAll(sepakBolaButton, badmintonButton);
 
             // Tombol kembali
             kembaliButton = UIFactory.createNavButton("/images/Back.png", 120, 50);
 
-            contentArea.getChildren().addAll(title, pilihanBox, kembaliButton);
+            contentArea.getChildren().addAll(pilihanBox, kembaliButton);
             overlayContainer.getChildren().addAll(navbar, contentArea);
 
             // Stack background dan overlay
@@ -426,7 +481,8 @@ public class MainView {
             VBox.setVgrow(contentArea, javafx.scene.layout.Priority.ALWAYS);
 
             Label title = new Label("Pilih Materi");
-            title.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C;");
+            title.setStyle(
+                    "-fx-font-family: 'Poppins', Arial; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C;");
 
             HBox pilihanBox = new HBox(60);
             pilihanBox.setAlignment(Pos.CENTER);
@@ -458,7 +514,8 @@ public class MainView {
 
         // Background dengan dot pattern dari vektor
         try {
-            ImageView dotBackground = new ImageView(new Image(getClass().getResourceAsStream("/images/dot background.png")));
+            ImageView dotBackground = new ImageView(
+                    new Image(getClass().getResourceAsStream("/images/dot background.png")));
             dotBackground.setFitWidth(1280);
             dotBackground.setFitHeight(832);
             dotBackground.setPreserveRatio(false);
@@ -491,7 +548,8 @@ public class MainView {
             } catch (Exception logoException) {
                 // Fallback jika gambar Quiz tidak ditemukan
                 Label title = new Label("Quiz");
-                title.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
+                title.setStyle(
+                        "-fx-font-family: 'Poppins', Arial; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
                 heroSection.getChildren().add(title);
             }
 
@@ -540,7 +598,8 @@ public class MainView {
                 heroSection.getChildren().add(quizLogo);
             } catch (Exception logoException) {
                 Label title = new Label("Quiz");
-                title.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C;");
+                title.setStyle(
+                        "-fx-font-family: 'Poppins', Arial; -fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C;");
                 heroSection.getChildren().add(title);
             }
 
@@ -572,7 +631,8 @@ public class MainView {
 
         // Background dengan dot pattern dan overlay gelap
         try {
-            ImageView dotBackground = new ImageView(new Image(getClass().getResourceAsStream("/images/dot background.png")));
+            ImageView dotBackground = new ImageView(
+                    new Image(getClass().getResourceAsStream("/images/dot background.png")));
             dotBackground.setFitWidth(1280);
             dotBackground.setFitHeight(832);
             dotBackground.setPreserveRatio(false);
@@ -595,7 +655,8 @@ public class MainView {
             VBox contentBox = new VBox(30);
             contentBox.setAlignment(Pos.CENTER);
             contentBox.setPadding(new Insets(40, 50, 40, 50));
-            contentBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.95); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 8);");
+            contentBox.setStyle(
+                    "-fx-background-color: rgba(255, 255, 255, 0.95); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 8);");
             contentBox.setMaxWidth(600);
             contentBox.setMaxHeight(400);
 
@@ -611,14 +672,16 @@ public class MainView {
             VBox headerSection = new VBox(20);
             headerSection.setAlignment(Pos.CENTER);
             try {
-                ImageView pilihModeImage = new ImageView(new Image(getClass().getResourceAsStream("/images/Pilih Mode.png")));
+                ImageView pilihModeImage = new ImageView(
+                        new Image(getClass().getResourceAsStream("/images/Pilih Mode.png")));
                 pilihModeImage.setFitHeight(40); // Smaller than before
                 pilihModeImage.setPreserveRatio(true);
                 pilihModeImage.setSmooth(true);
                 headerSection.getChildren().add(pilihModeImage);
             } catch (Exception logoException) {
                 Label pilihModeLabel = new Label("Pilih Mode Kuis");
-                pilihModeLabel.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
+                pilihModeLabel.setStyle(
+                        "-fx-font-family: 'Poppins', Arial; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
                 headerSection.getChildren().add(pilihModeLabel);
             }
 
@@ -641,7 +704,8 @@ public class MainView {
 
             VBox fallbackContainer = new VBox();
             fallbackContainer.setPrefSize(1280, 832);
-            fallbackContainer.setStyle("-fx-background-color: rgba(245, 230, 163, 0.7);"); // Background kuning dengan transparansi
+            fallbackContainer.setStyle("-fx-background-color: rgba(245, 230, 163, 0.7);"); // Background kuning dengan
+                                                                                           // transparansi
 
             HBox navbar = createNavbar();
 
@@ -653,7 +717,8 @@ public class MainView {
             VBox contentBox = new VBox(30);
             contentBox.setAlignment(Pos.CENTER);
             contentBox.setPadding(new Insets(40, 50, 40, 50));
-            contentBox.setStyle("-fx-background-color: rgba(255, 255, 255, 0.95); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 8);");
+            contentBox.setStyle(
+                    "-fx-background-color: rgba(255, 255, 255, 0.95); -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 8);");
             contentBox.setMaxWidth(600);
             contentBox.setMaxHeight(400);
 
@@ -667,14 +732,16 @@ public class MainView {
             VBox headerSection = new VBox(20);
             headerSection.setAlignment(Pos.CENTER);
             try {
-                ImageView pilihModeImage = new ImageView(new Image(getClass().getResourceAsStream("/images/Pilih Mode.png")));
+                ImageView pilihModeImage = new ImageView(
+                        new Image(getClass().getResourceAsStream("/images/Pilih Mode.png")));
                 pilihModeImage.setFitHeight(40);
                 pilihModeImage.setPreserveRatio(true);
                 pilihModeImage.setSmooth(true);
                 headerSection.getChildren().add(pilihModeImage);
             } catch (Exception logoException) {
                 Label pilihModeLabel = new Label("Pilih Mode Kuis");
-                pilihModeLabel.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C;");
+                pilihModeLabel.setStyle(
+                        "-fx-font-family: 'Poppins', Arial; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #1A1E2C;");
                 headerSection.getChildren().add(pilihModeLabel);
             }
             VBox buttonsContainer = new VBox(30);
