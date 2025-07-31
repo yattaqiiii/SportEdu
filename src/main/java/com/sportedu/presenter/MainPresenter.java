@@ -25,79 +25,227 @@ public class MainPresenter {
     public MainPresenter(MainView mainView, SportEduModel model) {
         this.mainView = mainView;
         this.model = model;
-        attachLandingPageEvents();
+
+        // Tampilkan landing page dulu
+        showLandingPage();
+
+        // Delay setup navbar untuk memastikan UI sudah ready
+        javafx.application.Platform.runLater(() -> {
+            javafx.application.Platform.runLater(() -> {
+                forceSetupNavbar();
+            });
+        });
+    }
+
+    // --- KONSEP NAVBAR BARU: BRUTAL FORCE SETUP ---
+
+    /**
+     * BRUTAL FORCE setup navbar - paksa setup dengan cara yang lebih aggressive
+     */
+    private void forceSetupNavbar() {
+        System.out.println("🔥 BRUTAL FORCE NAVBAR SETUP 🔥");
+
+        try {
+            // Force setup dengan multiple attempts
+            setupNavbarAttempt(1);
+
+            // Backup setup dengan delay
+            javafx.animation.PauseTransition delay1 = new javafx.animation.PauseTransition(javafx.util.Duration.millis(500));
+            delay1.setOnFinished(e -> setupNavbarAttempt(2));
+            delay1.play();
+
+            // Triple backup setup
+            javafx.animation.PauseTransition delay2 = new javafx.animation.PauseTransition(javafx.util.Duration.millis(1000));
+            delay2.setOnFinished(e -> setupNavbarAttempt(3));
+            delay2.play();
+
+        } catch (Exception e) {
+            System.out.println("❌ Error in brutal force setup: " + e.getMessage());
+        }
+    }
+
+    private void setupNavbarAttempt(int attempt) {
+        System.out.println("🎯 NAVBAR SETUP ATTEMPT #" + attempt);
+
+        if (mainView.navHomeButton != null) {
+            System.out.println("✅ Attempt " + attempt + ": navHomeButton found");
+            // Clear any existing handlers first
+            mainView.navHomeButton.setOnAction(null);
+            // Set new handler
+            mainView.navHomeButton.setOnAction(event -> {
+                System.out.println("🏠 NAVBAR HOME CLICKED!");
+                brutalNavigateToHome();
+            });
+        } else {
+            System.out.println("❌ Attempt " + attempt + ": navHomeButton is NULL");
+        }
+
+        if (mainView.navMateriButton != null) {
+            System.out.println("✅ Attempt " + attempt + ": navMateriButton found");
+            mainView.navMateriButton.setOnAction(null);
+            mainView.navMateriButton.setOnAction(event -> {
+                System.out.println("📚 NAVBAR MATERI CLICKED!");
+                brutalNavigateToMateri();
+            });
+        } else {
+            System.out.println("❌ Attempt " + attempt + ": navMateriButton is NULL");
+        }
+
+        if (mainView.navQuizButton != null) {
+            System.out.println("✅ Attempt " + attempt + ": navQuizButton found");
+            mainView.navQuizButton.setOnAction(null);
+            mainView.navQuizButton.setOnAction(event -> {
+                System.out.println("🎮 NAVBAR QUIZ CLICKED!");
+                brutalNavigateToQuiz();
+            });
+        } else {
+            System.out.println("❌ Attempt " + attempt + ": navQuizButton is NULL");
+        }
+    }
+
+    // BRUTAL NAVIGATION METHODS
+    private void brutalNavigateToHome() {
+        System.out.println("🔥 BRUTAL NAVIGATE TO HOME");
+        javafx.application.Platform.runLater(() -> {
+            mainView.showLandingPage();
+            attachLandingPageEvents();
+            // RE-SETUP NAVBAR setelah brutal navigation
+            reSetupNavbarAfterPageChange();
+        });
+    }
+
+    private void brutalNavigateToMateri() {
+        System.out.println("🔥 BRUTAL NAVIGATE TO MATERI");
+        javafx.application.Platform.runLater(() -> {
+            mainView.showMateriPilihanPage();
+            attachMateriPageEvents();
+            // RE-SETUP NAVBAR setelah brutal navigation
+            reSetupNavbarAfterPageChange();
+        });
+    }
+
+    private void brutalNavigateToQuiz() {
+        System.out.println("🔥 BRUTAL NAVIGATE TO QUIZ");
+        javafx.application.Platform.runLater(() -> {
+            mainView.showQuizModePage();
+            attachQuizModePageEvents();
+            // RE-SETUP NAVBAR setelah brutal navigation
+            reSetupNavbarAfterPageChange();
+        });
     }
 
     // --- Bagian Navigasi Utama ---
 
-    private void attachLandingPageEvents() {
-        mainView.materiButton.setOnAction(e -> showMateriPage());
-        mainView.quizButton.setOnAction(e -> showQuizModePage());
+    /**
+     * Setup navbar universal - berfungsi untuk navigasi paksa ke halaman manapun
+     */
+    private void setupUniversalNavbar() {
+        System.out.println("=== SETUP UNIVERSAL NAVBAR ===");
 
-        // Attach navbar events
-        attachNavbarEvents();
+        // Navbar sebagai tombol navigasi universal - tidak peduli halaman apa yang sedang aktif
+        if (mainView.navHomeButton != null) {
+            System.out.println("✓ navHomeButton - setup for universal navigation");
+            mainView.navHomeButton.setOnAction(e -> {
+                System.out.println(">>> NAVBAR: Force navigate to LANDING PAGE");
+                forceNavigateToLandingPage();
+            });
+        }
+
+        if (mainView.navMateriButton != null) {
+            System.out.println("✓ navMateriButton - setup for universal navigation");
+            mainView.navMateriButton.setOnAction(e -> {
+                System.out.println(">>> NAVBAR: Force navigate to MATERI PAGE");
+                forceNavigateToMateriPage();
+            });
+        }
+
+        if (mainView.navQuizButton != null) {
+            System.out.println("✓ navQuizButton - setup for universal navigation");
+            mainView.navQuizButton.setOnAction(e -> {
+                System.out.println(">>> NAVBAR: Force navigate to QUIZ PAGE");
+                forceNavigateToQuizPage();
+            });
+        }
+
+        System.out.println("=== UNIVERSAL NAVBAR READY ===");
     }
 
     /**
-     * Attach event handlers to navbar buttons
+     * Force navigate ke landing page - dari halaman manapun
      */
-    private void attachNavbarEvents() {
-        if (mainView.navHomeButton != null) {
-            mainView.navHomeButton.setOnAction(e -> showLandingPage());
-        }
-        if (mainView.navMateriButton != null) {
-            mainView.navMateriButton.setOnAction(e -> showMateriPage());
-        }
-        if (mainView.navQuizButton != null) {
-            mainView.navQuizButton.setOnAction(e -> showQuizModePage());
-        }
+    private void forceNavigateToLandingPage() {
+        mainView.showLandingPage();
+        attachLandingPageEvents();
+        // RE-SETUP NAVBAR setiap pindah halaman
+        reSetupNavbarAfterPageChange();
+    }
+
+    /**
+     * Force navigate ke materi page - dari halaman manapun
+     */
+    private void forceNavigateToMateriPage() {
+        mainView.showMateriPilihanPage();
+        attachMateriPageEvents();
+        // RE-SETUP NAVBAR setiap pindah halaman
+        reSetupNavbarAfterPageChange();
+    }
+
+    /**
+     * Force navigate ke quiz page - dari halaman manapun
+     */
+    private void forceNavigateToQuizPage() {
+        mainView.showQuizModePage();
+        attachQuizModePageEvents();
+        // RE-SETUP NAVBAR setiap pindah halaman
+        reSetupNavbarAfterPageChange();
+    }
+
+    /**
+     * RE-SETUP navbar setelah pindah halaman karena navbar dibuat ulang
+     */
+    private void reSetupNavbarAfterPageChange() {
+        System.out.println("🔄 RE-SETUP NAVBAR AFTER PAGE CHANGE");
+
+        // Delay setup untuk memastikan UI halaman baru sudah ready
+        javafx.application.Platform.runLater(() -> {
+            javafx.application.Platform.runLater(() -> {
+                setupNavbarAttempt(99); // Attempt 99 = re-setup
+            });
+        });
+    }
+
+    private void attachLandingPageEvents() {
+        mainView.materiButton.setOnAction(e -> forceNavigateToMateriPage());
+        mainView.quizButton.setOnAction(e -> forceNavigateToQuizPage());
     }
 
     private void attachMateriPageEvents() {
-        mainView.kembaliButton.setOnAction(e -> showLandingPage());
+        mainView.kembaliButton.setOnAction(e -> forceNavigateToLandingPage());
         mainView.sepakBolaButton.setOnAction(e -> showTeknikPage("Sepak Bola"));
         mainView.badmintonButton.setOnAction(e -> showTeknikPage("Badminton"));
     }
 
     private void attachQuizModePageEvents() {
-        // Attach navbar events untuk halaman quiz - ini yang paling penting
-        attachNavbarEvents();
-
-        // Attach event handlers untuk tombol Mulai dan Petunjuk yang ada di halaman quiz
+        // Event handlers untuk tombol Mulai dan Petunjuk
         if (mainView.mulaiButton != null) {
             mainView.mulaiButton.setOnAction(e -> showQuizModeSelectionPage());
         }
         if (mainView.petunjukButton != null) {
             mainView.petunjukButton.setOnAction(e -> showInstructionsPage());
         }
-
-        // Tombol-tombol ini hanya ada di halaman pemilihan mode quiz, bukan di halaman quiz utama
-        if (mainView.tebakGambarButton != null) {
-            mainView.tebakGambarButton.setOnAction(e -> startTebakGambarQuiz());
-        }
-        if (mainView.cocokGambarButton != null) {
-            mainView.cocokGambarButton.setOnAction(e -> startMencocokkanGambarQuiz());
-        }
-        if (mainView.kembaliButton != null) {
-            mainView.kembaliButton.setOnAction(e -> showLandingPage());
-        }
     }
 
+    // Method navigasi sederhana untuk kompatibilitas
     private void showLandingPage() {
-        mainView.showLandingPage();
-        attachLandingPageEvents();
+        forceNavigateToLandingPage();
     }
 
     private void showMateriPage() {
-        mainView.showMateriPilihanPage();
-        attachMateriPageEvents();
-        // Tambahkan navbar events untuk halaman materi
-        attachNavbarEvents();
+        forceNavigateToMateriPage();
     }
 
     private void showQuizModePage() {
-        mainView.showQuizModePage();
-        attachQuizModePageEvents();
+        forceNavigateToQuizPage();
     }
 
     private void showTeknikPage(String olahraga) {
@@ -277,7 +425,7 @@ public class MainPresenter {
      */
     private void showQuizModeSelectionPage() {
         mainView.showQuizModeSelectionPage();
-        attachNavbarEvents(); // Pastikan event handler navbar di-attach
+        // Navbar sudah di-setup sekali di constructor, tidak perlu setup ulang
         attachQuizModeSelectionPageEvents();
     }
 
@@ -285,8 +433,6 @@ public class MainPresenter {
      * Attach event handlers untuk halaman pemilihan mode quiz
      */
     private void attachQuizModeSelectionPageEvents() {
-        // Attach navbar events
-        attachNavbarEvents();
 
         // Event handlers untuk tombol mode quiz
         if (mainView.tebakGambarButton != null) {
