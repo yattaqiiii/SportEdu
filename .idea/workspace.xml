@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c83b5bd2-c0e8-4943-be14-c818ccacdbaf" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/create-portable-distribution.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/run-dev.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/copilotDiffState.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/copilotDiffState.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CARA_MEMBUAT_EXE.md" beforeDir="false" afterPath="$PROJECT_DIR$/CARA_MEMBUAT_EXE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CaraSetup.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dokumentasi.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/INSTALL_MAVEN.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cleanup-project.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/create-native-exe.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fix-git-large-files.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run-sportedu.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run-with-javafx.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/presenter/MainPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/presenter/MainPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/view/AnimasiView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/view/AnimasiView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/view/MainView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/view/MainView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/view/MatchingQuizFXView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/view/MatchingQuizFXView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/view/PenjelasanView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/view/PenjelasanView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sportedu/view/QuizView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sportedu/view/QuizView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/1. Landing Page.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/2. Quiz - Pilih mode.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/2. Quiz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/2.1 Tebak Gambar - skor akhir.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/2.1 Tebak Gambar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/2.2 Mencocokkan Gambar - skor akhir.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/2.2 Mencocokkan Gambar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/2.2 Petunjuk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/3. Materi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/3.1 Pilih Teknik.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/3.1.1 Pengertian.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/3.1.2 Animasi - volume on.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tampilan/3.1.2 Animasi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/presenter/MainPresenter$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/presenter/MainPresenter$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/presenter/MainPresenter$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/presenter/MainPresenter$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/presenter/MainPresenter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/presenter/MainPresenter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/AnimasiView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/AnimasiView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/HasilMencocokkanGambarView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/HasilMencocokkanGambarView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/HasilQuizView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/HasilQuizView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/HasilTebakGambarView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/HasilTebakGambarView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/InstructionsView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/InstructionsView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/MainView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/MainView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/MatchingQuizFXView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/MatchingQuizFXView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/PenjelasanView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/PenjelasanView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/QuizView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/QuizView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/SkorView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/SkorView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/TeknikView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/TeknikView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sportedu/view/UIFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sportedu/view/UIFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/module-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/module-info.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/sportedu/view/TeknikView.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="30YtYneKW3Cp0IHnNBgzBkyovkr" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;C:/Users/Yattaqi/IdeaProjects/com.sportedu/src/main/model&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Yattaqi/IdeaProjects/com.sportedu/src/main/resources&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.general.GeneralConfigurable&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\resources" />
+      <recent name="C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\resources\images" />
+      <recent name="C:\Users\Yattaqi\IdeaProjects\com.sportedu\tampilan" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Yattaqi\IdeaProjects\com.sportedu\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="SportEdu.v1.0.0" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="SportEdu.v1.0.0" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="SportEdu.v1.0.0" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Tox" factoryName="Tox">
+      <module name="SportEdu.v1.0.0" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Autodetect">
+      <module name="SportEdu.v1.0.0" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Doctests">
+      <module name="SportEdu.v1.0.0" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c83b5bd2-c0e8-4943-be14-c818ccacdbaf" name="Changes" comment="" />
+      <created>1753816389731</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1753816389731</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TerminalProjectOptionsProvider">
+    <option name="shellPath" value="powershell.exe" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.ps1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
