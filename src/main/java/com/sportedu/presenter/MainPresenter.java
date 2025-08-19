@@ -272,12 +272,6 @@ public class MainPresenter {
         PenjelasanView penjelasanView = new PenjelasanView();
         penjelasanView.displayTeknik(teknik);
 
-        // Tombol Next - sekarang menampilkan overlay animasi di halaman yang sama
-        penjelasanView.getNextButton().setOnAction(e -> {
-            // Tampilkan overlay animasi di halaman penjelasan
-            penjelasanView.showAnimationOverlay(teknik);
-        });
-
         // Tombol Kembali kuning - kembali ke halaman teknik DENGAN FORCE STOP AUDIO
         penjelasanView.getKembaliButton().setOnAction(e -> {
             // PENTING: Stop audio PenjelasanView secara paksa sebelum navigasi
@@ -288,19 +282,6 @@ public class MainPresenter {
         });
 
         mainView.setView(penjelasanView.getView());
-    }
-
-    private void showAnimasiPage(Teknik teknik, String olahraga) {
-        AnimasiView animasiView = new AnimasiView();
-        animasiView.displayAnimasi(teknik);
-
-        // Tombol Back - kembali ke halaman penjelasan
-        animasiView.getBackButton().setOnAction(e -> showPenjelasanPage(teknik, olahraga));
-
-        // Tombol Kembali kuning - kembali ke halaman teknik
-        animasiView.getKembaliButton().setOnAction(e -> showTeknikPage(olahraga));
-
-        mainView.setView(animasiView.getView());
     }
 
     // --- Bagian Logika Kuis Tebak Gambar (10 soal) ---
@@ -577,9 +558,11 @@ public class MainPresenter {
             System.out.println("🔇 FORCE STOPPING all audio in all views...");
 
             // Coba akses PenjelasanView yang mungkin masih aktif
-            // Kita tidak bisa langsung akses instance PenjelasanView, jadi kita paksa dengan cara lain
+            // Kita tidak bisa langsung akses instance PenjelasanView, jadi kita paksa
+            // dengan cara lain
 
-            // Force garbage collection untuk memastikan MediaPlayer yang tidak terpakai di-cleanup
+            // Force garbage collection untuk memastikan MediaPlayer yang tidak terpakai
+            // di-cleanup
             System.gc();
 
             // Tunggu sebentar untuk memastikan GC berjalan
@@ -593,7 +576,8 @@ public class MainPresenter {
     }
 
     /**
-     * Helper method to extract answer from image path (same logic as in MatchingQuizFXView)
+     * Helper method to extract answer from image path (same logic as in
+     * MatchingQuizFXView)
      */
     private String extractAnswerFromImagePath(String imagePath) {
         if (imagePath == null || imagePath.isEmpty()) {
