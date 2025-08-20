@@ -125,8 +125,7 @@ public class PenjelasanView {
     private void setupLayout() {
         view.getChildren().clear();
         try {
-            ImageView dotBackground = new ImageView(
-                    new Image(getClass().getResourceAsStream("/images/dot background.png")));
+            ImageView dotBackground = new ImageView(new Image(getClass().getResourceAsStream("/images/dot background.png")));
             dotBackground.fitWidthProperty().bind(view.widthProperty());
             dotBackground.fitHeightProperty().bind(view.heightProperty());
             dotBackground.setPreserveRatio(false);
@@ -219,8 +218,7 @@ public class PenjelasanView {
         VBox whiteBox = new VBox(12);
         whiteBox.setAlignment(Pos.CENTER);
         whiteBox.setPadding(new Insets(18, 25, 18, 25));
-        whiteBox.setStyle(
-                "-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
+        whiteBox.setStyle("-fx-background-color: white; -fx-background-radius: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 5);");
         whiteBox.setMaxWidth(550);
         whiteBox.setPrefWidth(550);
         whiteBox.setMaxHeight(430);
@@ -258,8 +256,7 @@ public class PenjelasanView {
         techniqueContainer.getChildren().addAll(techniquePhotoView, animationStack);
 
         descriptionLabel = new Label();
-        descriptionLabel.setStyle(
-                "-fx-font-family: 'Poppins', Arial; -fx-font-size: 12px; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
+        descriptionLabel.setStyle("-fx-font-family: 'Poppins', Arial; -fx-font-size: 12px; -fx-text-fill: #1A1E2C; -fx-text-alignment: center;");
         descriptionLabel.setWrapText(true);
         descriptionLabel.setMaxWidth(480);
         descriptionLabel.setMaxHeight(100);
@@ -310,30 +307,14 @@ public class PenjelasanView {
         try {
             String techniqueImagePath = "";
             switch (currentTeknikName) {
-                case "smash":
-                    techniqueImagePath = "/images/badminton_smash.jpg";
-                    break;
-                case "netting":
-                    techniqueImagePath = "/images/badminton_netting.jpg";
-                    break;
-                case "servis":
-                    techniqueImagePath = "/images/badminton_service.jpg";
-                    break;
-                case "footwork":
-                    techniqueImagePath = "/images/badminton_footwork.jpg";
-                    break;
-                case "dribbling":
-                    techniqueImagePath = "/images/soccer_dribble.jpg";
-                    break;
-                case "shooting":
-                    techniqueImagePath = "/images/soccer_shoot.jpg";
-                    break;
-                case "heading":
-                    techniqueImagePath = "/images/soccer_heading.jpg";
-                    break;
-                case "passing":
-                    techniqueImagePath = "/images/soccer_passing.jpg";
-                    break;
+                case "smash": techniqueImagePath = "/images/badminton_smash.jpg"; break;
+                case "netting": techniqueImagePath = "/images/badminton_netting.jpg"; break;
+                case "servis": techniqueImagePath = "/images/badminton_service.jpg"; break;
+                case "footwork": techniqueImagePath = "/images/badminton_footwork.jpg"; break;
+                case "dribbling": techniqueImagePath = "/images/soccer_dribble.jpg"; break;
+                case "shooting": techniqueImagePath = "/images/soccer_shoot.jpg"; break;
+                case "heading": techniqueImagePath = "/images/soccer_heading.jpg"; break;
+                case "passing": techniqueImagePath = "/images/soccer_passing.jpg"; break;
             }
             if (!techniqueImagePath.isEmpty()) {
                 Image techniqueImage = new Image(getClass().getResourceAsStream(techniqueImagePath));
@@ -360,7 +341,7 @@ public class PenjelasanView {
         delay.setOnFinished(e -> {
             // Coba muat GIF
             try {
-                String gifPath = "/images/" + currentTeknikName + ".gif";
+                String gifPath = "/images/animasi_" + currentTeknikName + ".gif";
                 Image gif = new Image(getClass().getResourceAsStream(gifPath));
 
                 // Periksa apakah gambar berhasil dimuat
